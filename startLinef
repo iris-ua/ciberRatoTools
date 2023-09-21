@@ -12,7 +12,7 @@ sleep 1
 
 (cd Viewer; ./Viewer --autoconnect) &
 
-sleep 1
+sleep 2
 
 (cd robsample; ./robsample )
 
@@ -20,6 +20,6 @@ killall Viewer
 killall simulator
 
 # (cd robsample; octave --eval 'load("output.txt");figure;plot(output(:,1),output(:,2),"-;pos Error;",output(:,1),output(:,3),"-;posOverLine;",output(:,1),output(:,4),"-;lPow;",output(:,1),output(:,5),"-;rPow;");pause')
-(cd robsample; octave --eval 'load("output.txt");figure;plot(output(:,1),output(:,2),"-;pos Error;",output(:,1),output(:,3));pause')
+(cd robsample; octave --eval 'load("output.txt");figure;plot(output(:,1),output(:,2),"-;pos Error;",output(:,1),output(:,3),"-;sensor reading;");pause')
 
 echo Bye
