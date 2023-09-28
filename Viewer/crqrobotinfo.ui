@@ -284,7 +284,7 @@
       <enum>QFrame::Panel</enum>
      </property>
      <property name="numDigits">
-      <number>4</number>
+      <number>5</number>
      </property>
      <property name="segmentStyle">
       <enum>QLCDNumber::Flat</enum>

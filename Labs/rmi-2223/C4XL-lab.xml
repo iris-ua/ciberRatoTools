@@ -1,0 +1,26 @@
+<Lab Name="RMI-2223 C4-XL Lab" Height="14" Width="28">
+		<Beacon X="6" Y="12.0" Height="4.0"/>
+		<Target X="6" Y="12.0" Radius="1.0"/>
+
+		<Beacon X="10" Y="12.0" Height="4.0"/>
+		<Target X="10" Y="12.0" Radius="1.0"/>
+
+		
+        <Beacon X="6" Y="6.0" Height="4.0"/>
+		<Target X="6" Y="6.0" Radius="1.0"/>
+
+		<Row  Pos="12" Height="0.0" Pattern="                                         "  />
+		<Row  Pos="11" Height="0.0" Pattern="  +--+--+--+--+--+--+--+--+--+--+--+--+  "  />
+		<Row  Pos="10" Height="0.0" Pattern="        |     |           |        |  |  "  />
+		<Row  Pos="9"  Height="0.0" Pattern="  +--+--+--+--+--+--+--+--+--+--+--+  +  "  />
+		<Row  Pos="8"  Height="0.0" Pattern="  |                                |  |  "  />
+		<Row  Pos="7"  Height="0.0" Pattern="  +  +--+--+--+--+--+--+--+--+--+  +  +  "  />
+		<Row  Pos="6"  Height="0.0" Pattern="  |  |                          |  |  |  "  />
+		<Row  Pos="5"  Height="0.0" Pattern="  +  +  +--+--+--+--+--+--+--+--+  +  +  "  />
+		<Row  Pos="4"  Height="0.0" Pattern="  |  |                             |  |  "  />
+		<Row  Pos="3"  Height="0.0" Pattern="  +  +--+--+--+--+--+--+--+--+--+--+  +  "  />
+		<Row  Pos="2"  Height="0.0" Pattern="  |                                   |  "  />
+		<Row  Pos="1"  Height="0.0" Pattern="  +--+--+--+--+--+--+--+--+--+--+--+--+  "  />
+		<Row  Pos="0"  Height="0.0" Pattern="                                         "  />
+</Lab>
+

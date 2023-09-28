@@ -32,7 +32,7 @@ class MyRob(CRobLinkAngs):
             self.readSensors()
 
             if self.measures.endLed:
-                print(self.rob_name + " exiting")
+                print(self.robName + " exiting")
                 quit()
 
             if state == 'stop' and self.measures.start:

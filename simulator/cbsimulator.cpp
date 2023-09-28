@@ -1039,21 +1039,22 @@ void cbSimulator::UpdateScores()
 	for (unsigned int i = 0; i < robots.size(); i++) // for all robots
 	{
 		cbRobot *robot = robots[i];
-		if (robot == 0)
-			continue;
+        if (robot == 0) continue;
 
-		switch (scoring)
-		{
-		case 1:
-			robot->updateScoreControl(); // CONTROL
-			break;
-		case 4:
-			robot->updateScoreLineControl2022(); // LINE CONTROL
-			break;
-		case 5:
-		case 6:
-			robot->updateScoreLineMappingPlanning2022(); // LINE MAPPING PLANNING
-			break;
+        switch(scoring) {
+          case 1:
+            robot->updateScoreControl();         // CONTROL
+            break;
+          case 4:
+            robot->updateScoreLineControl2022(); // LINE CONTROL
+            break;
+          case 5:
+          case 6:
+            robot->updateScoreLineMappingPlanning2022(); // LINE MAPPING PLANNING
+            break;
+          case 7:
+            robot->updateScoreLineControl2023(); // LINE CONTROL 2023 (lines at 45 degrees are allowed)
+            break;
 
 		default:
 			robot->updateScoreCompetitive(); // COMPETITIVE
@@ -1148,34 +1149,36 @@ void cbSimulator::UpdateState()
 	for (unsigned int i = 0; i < robots.size(); i++)
 	{
 		cbRobot *robot = robots[i];
-		if (robot == 0)
-			continue;
+		if (robot == 0) continue;
 
-		switch (scoring)
-		{
-		case 1:
-			robot->updateStateControl(); // CONTROL
-			break;
-		case 2:
-			robot->updateStateMapping(); // MAPPING
-			break;
-		case 3:
-			robot->updateStatePlanning(); // PLANNING
-			break;
-		case 4:
-			robot->updateStateLineControl2022(); // LINE CONTROL
-			break;
-		case 5:
-			robot->updateStateLineMapping2022(); // LINE MAPPING
-			break;
-		case 6:
-			robot->updateStateLinePlanning2022(); // LINE PLANNING
-			break;
-		default:
-			robot->updateStateCompetitive(); // COMPETITIVE
-			// robot->updateState();               // COOPERATIVE
-			break;
-		}
+        switch(scoring) {
+          case 1:
+            robot->updateStateControl();                  // CONTROL
+             break;
+          case 2:
+            robot->updateStateMapping();                  // MAPPING
+            break;
+          case 3:
+            robot->updateStatePlanning();                 // PLANNING
+            break;
+          case 4:
+            robot->updateStateLineControl2022();          // LINE CONTROL
+             break;
+          case 5:
+            robot->updateStateLineMapping2022();          // LINE MAPPING
+             break;
+          case 6:
+            robot->updateStateLinePlanning2022();         // LINE PLANNING
+             break;
+          case 7:
+            robot->updateStateLineControl2023();         // LINE CONTROL 2023 (lines at 45 degrees allowed)
+             break;
+          default:
+            robot->updateStateCompetitive();    // COMPETITIVE
+            //robot->updateState();               // COOPERATIVE
+            break;
+        }
+        
 	}
 }
 

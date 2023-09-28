@@ -30,11 +30,12 @@
 #include "cbsimulator.h"
 #include "cbpoint.h"
 
+#include <math.h>
 #include <qstring.h>
 
 #define PATHCUBESIZE  (2.0)
-#define PATHWALLWIDTH (0.05)
-#define PATHWALLGAP   (0.00)
+#define PATHWALLWIDTH (0.2)
+#define PATHWALLGAP   (0.0)
 
 bool cbLabHandler::startDocument()
 {
@@ -134,19 +135,39 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
                 bool inHorizontalWall=false;
                 int horWallStartCol, horWallEndCol;
                 while (!spec->isNull()) {
-                    if(row % 2 == 0) { // only vertical walls are allowed here
+                    if(row % 2 == 0) { // only vertical or diagonal walls are allowed here
                         if(spec->toLatin1()=='|') {
 		            		wall = new cbWall;
-                            wall->addCorner (((col+1)/3.0-PATHWALLWIDTH)*PATHCUBESIZE, (row*0.5+PATHWALLGAP)*PATHCUBESIZE);
-                            wall->addCorner (((col+1)/3.0+PATHWALLWIDTH)*PATHCUBESIZE, (row*0.5+PATHWALLGAP)*PATHCUBESIZE);
-                            wall->addCorner (((col+1)/3.0+PATHWALLWIDTH)*PATHCUBESIZE, (row*0.5+1.0-PATHWALLGAP)*PATHCUBESIZE);
-                            wall->addCorner (((col+1)/3.0-PATHWALLWIDTH)*PATHCUBESIZE, (row*0.5+1.0-PATHWALLGAP)*PATHCUBESIZE);
+                            wall->addCorner (((col+1)/3.0)*PATHCUBESIZE-PATHWALLWIDTH*0.5, (row*0.5+PATHWALLGAP)*PATHCUBESIZE);
+                            wall->addCorner (((col+1)/3.0)*PATHCUBESIZE+PATHWALLWIDTH*0.5, (row*0.5+PATHWALLGAP)*PATHCUBESIZE);
+                            wall->addCorner (((col+1)/3.0)*PATHCUBESIZE+PATHWALLWIDTH*0.5, (row*0.5+1.0-PATHWALLGAP)*PATHCUBESIZE);
+                            wall->addCorner (((col+1)/3.0)*PATHCUBESIZE-PATHWALLWIDTH*0.5, (row*0.5+1.0-PATHWALLGAP)*PATHCUBESIZE);
 							wall->setHeight(height);
 
                             lab->addWall(wall);
-                       }
-                   }
-                   else {// only horizontal walls are allowed at odd rows
+                       	}
+	                	else if(spec->toLatin1()=='\\') {
+		            		wall = new cbWall;
+                            wall->addCorner (((col)/3.0)*PATHCUBESIZE  -PATHWALLWIDTH*0.5*cos(M_PI/4), (row*0.5+1.0+PATHWALLGAP)*PATHCUBESIZE-PATHWALLWIDTH*0.5*sin(M_PI/4));
+                            wall->addCorner (((col)/3.0)*PATHCUBESIZE  +PATHWALLWIDTH*0.5*cos(M_PI/4), (row*0.5+1.0+PATHWALLGAP)*PATHCUBESIZE+PATHWALLWIDTH*0.5*sin(M_PI/4));
+                            wall->addCorner (((col+3)/3.0)*PATHCUBESIZE+PATHWALLWIDTH*0.5*cos(M_PI/4), (row*0.5-PATHWALLGAP)*PATHCUBESIZE    +PATHWALLWIDTH*0.5*sin(M_PI/4));
+                            wall->addCorner (((col+3)/3.0)*PATHCUBESIZE-PATHWALLWIDTH*0.5*cos(M_PI/4), (row*0.5-PATHWALLGAP)*PATHCUBESIZE    -PATHWALLWIDTH*0.5*sin(M_PI/4));
+							wall->setHeight(height);
+
+                            lab->addWall(wall);
+                   		}
+	                	else if(spec->toLatin1()=='/') {
+		            		wall = new cbWall;
+                            wall->addCorner (((col)/3.0)*PATHCUBESIZE  -PATHWALLWIDTH*0.5*cos(M_PI/4), (row*0.5+PATHWALLGAP)*PATHCUBESIZE    +PATHWALLWIDTH*0.5*sin(M_PI/4));
+                            wall->addCorner (((col)/3.0)*PATHCUBESIZE  +PATHWALLWIDTH*0.5*cos(M_PI/4), (row*0.5+PATHWALLGAP)*PATHCUBESIZE    -PATHWALLWIDTH*0.5*sin(M_PI/4));
+                            wall->addCorner (((col+3)/3.0)*PATHCUBESIZE+PATHWALLWIDTH*0.5*cos(M_PI/4), (row*0.5+1.0-PATHWALLGAP)*PATHCUBESIZE-PATHWALLWIDTH*0.5*sin(M_PI/4));
+                            wall->addCorner (((col+3)/3.0)*PATHCUBESIZE-PATHWALLWIDTH*0.5*cos(M_PI/4), (row*0.5+1.0-PATHWALLGAP)*PATHCUBESIZE+PATHWALLWIDTH*0.5*sin(M_PI/4));
+							wall->setHeight(height);
+
+                            lab->addWall(wall);
+                   		}
+					}
+                    else {// only horizontal walls are allowed at odd rows
                        if(col % 3 ==0) { // if there is a wall at this collumn then there must also be a wall in the next one
 
                            // start of horizontal wall
@@ -168,10 +189,10 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
                                }
 		               		   wall = new cbWall;
 
-                               wall->addCorner ((horWallStartCol/3.0+PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5-PATHWALLWIDTH)*PATHCUBESIZE);
-                               wall->addCorner ((horWallEndCol/3.0+1.0-PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5-PATHWALLWIDTH)*PATHCUBESIZE);
-                               wall->addCorner ((horWallEndCol/3.0+1.0-PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5+PATHWALLWIDTH)*PATHCUBESIZE);
-                               wall->addCorner ((horWallStartCol/3.0+PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5+PATHWALLWIDTH)*PATHCUBESIZE);
+                               wall->addCorner ((horWallStartCol/3.0+PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5)*PATHCUBESIZE-PATHWALLWIDTH*0.5);
+                               wall->addCorner ((horWallEndCol/3.0+1.0-PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5)*PATHCUBESIZE-PATHWALLWIDTH*0.5);
+                               wall->addCorner ((horWallEndCol/3.0+1.0-PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5)*PATHCUBESIZE+PATHWALLWIDTH*0.5);
+                               wall->addCorner ((horWallStartCol/3.0+PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5)*PATHCUBESIZE+PATHWALLWIDTH*0.5);
 							   wall->setHeight(height);
 
                                lab->addWall(wall);
@@ -190,7 +211,14 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
                    col++;
                }
 	}
-    return TRUE;
+
+	//// DEBUG
+	//char buff[1024*1024];
+	//lab->toXml(buff,sizeof(buff));
+	//fprintf(stderr,buff);
+    ////
+	
+	return TRUE;
 }
 
 bool cbLabHandler::endElement( const QString&, const QString&, const QString& qName)

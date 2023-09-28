@@ -148,6 +148,7 @@ public:
 	void updateScoreControl();
 	void updateScoreLineControl2022();
     void updateScoreLineMappingPlanning2022();
+	void updateScoreLineControl2023();
 
 
 	void updateState();
@@ -158,6 +159,7 @@ public:
     void updateStateLineControl2022();
     void updateStateLineMapping2022();
     void updateStateLinePlanning2022();
+    void updateStateLineControl2023();
 
 	void updateSensors();
 

@@ -156,7 +156,7 @@ void CommandLineError()
 int main(int argc, char *argv[])
 {
 	/* Copyright and wellcome message */
-    printf(" CiberRato 2022 Simulator\n Copyright (C) 2001-2022 Universidade de Aveiro\n");
+    printf(" CiberRato 2023 Simulator\n Copyright (C) 2001-2023 Universidade de Aveiro\n");
     fflush(stdout);
 
 	/* extract option values */

@@ -33,7 +33,7 @@ It is required to have the development version of gcc/g++, cmake, Qt libraries
 release 5.x installed in the system prior to compilation.
 On Ubuntu 20.04 run the following:
 ```bash
-sudo apt-get install build-essential cmake qt5-default qtmultimedia5-dev
+sudo apt-get install build-essential cmake qtmultimedia5-dev
 ```
 
 Then in the repository base dir, execute:

@@ -3,6 +3,7 @@ BEGIN {
    line=1
    score=0
    pathind = 1
+   robDist = 0
 
    linelength=49
    nlines=21
@@ -55,6 +56,7 @@ FNR==NR {
         if(mapref[y+(nlines+1)/2][x+(linelength+1)/2] ~ /[0-9]/) {
             visited[mapref[y+(nlines+1)/2][x+(linelength+1)/2]+0] = 1
         }
+        robDist += sqrt(4*movdirX*movdirX+4*movdirY*movdirY)
     }
 
 
@@ -94,8 +96,8 @@ END {
          nTargets++
      }
 
-     robDist = (pathind-2)*2
-     if(robDist < bestDist) robDist=bestDist
+     #robDist = (pathind-2)*2
+     #if(robDist < bestDist) robDist=bestDist
      score = bestDist/robDist - nonVisitedTargets/nTargets
      print "Planning score: " score
 }

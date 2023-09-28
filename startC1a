@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ARGS="--param ../Labs/rmi-2324/C1-config.xml"
-ARGS+=" --lab ../Labs/rmi-2324/C1-lab.xml"
+ARGS+=" --lab ../Labs/rmi-2324/C1a-lab.xml"
 ARGS+=" --grid ../Labs/rmi-2324/C1-grid.xml"
 ARGS+=" --scoring 7"
 (cd simulator; ./simulator $ARGS) &

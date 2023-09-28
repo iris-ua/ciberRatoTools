@@ -81,7 +81,7 @@ vector<cbPoint> &cbWall::Corners()
 double cbWall::distance(cbPoint &p)
 {
 	//cout.form("cbWall::distance(%g,%g)\n", p.x, p.y);
-	showCorners();
+	//showCorners();
 	unsigned int n = corners.size();
 	cbPoint *a = &corners[n-1];
 	double min = p.distance(a);	// first value for minimum distance
@@ -304,9 +304,9 @@ void cbWall::showCorners()
 {
 	for (unsigned i=0; i<corners.size(); i++)
 	{
-		//cout.form("corner[%u] = %g,%g ",i,corners[i].x,corners[i].y);
+		std::cout << "corner " << i << " = " << corners[i].x << " "  << corners[i].y << std::endl;
 	}
-	//cout << endl;
+	std::cout << std::endl;
 }
 
 double cbWall::cornerAngle(unsigned int c)

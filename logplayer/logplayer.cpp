@@ -29,6 +29,7 @@
 #include <QGraphicsScene>
 #include <qmessagebox.h>
 #include <QTextEdit>
+#include <QLocale>
 
 #ifndef MicWindows
 
@@ -249,6 +250,10 @@ int main(int argc, char *argv[])
     gui->setMaximumSize(gui->size());
     gui->setMinimumSize(gui->size());
     gui->show();
+
+    setlocale(LC_ALL,"C");
+    QLocale::setDefault(QLocale::c());
+
 
 	app.exec();
 

@@ -44,7 +44,6 @@ cbLab::cbLab(void)
 	border->addCorner(width,height);
 	border->addCorner(width,0);
 	addWall(border);
-	border->showCorners();
 }
 
 cbLab::~cbLab(void)
@@ -62,7 +61,6 @@ void cbLab::setWidth(double w)
 	width = w;
 	vector<cbPoint> &border = walls[0]->Corners();
 	border[2].x = border[3].x = w;
-	walls[0]->showCorners();
 }
 
 void cbLab::setHeight(double h)
@@ -70,7 +68,6 @@ void cbLab::setHeight(double h)
 	height = h;
 	vector<cbPoint> &border = walls[0]->Corners();
 	border[1].y = border[2].y = h;
-	walls[0]->showCorners();
 }
 
 void cbLab::addBeacon(cbBeacon *b)
