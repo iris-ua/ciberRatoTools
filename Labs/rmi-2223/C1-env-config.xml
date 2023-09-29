@@ -2,7 +2,7 @@
 		CompassNoise="0" BeaconNoise="2" ObstacleNoise="0.1"
 		MotorsNoise="1.5" KeyTime="5000"
 		GPS="Off" GPSLinNoise="0.0" GPSDirNoise="0" 
-        LineSensorTrueProb="0.98"
+        LineSensorTrueProb="1.00"
 		BeaconSensor="Off" 
 		CompassSensor="Off" 
 		ScoreSensor="On" ShowActions="True" NBeacons="0" 
