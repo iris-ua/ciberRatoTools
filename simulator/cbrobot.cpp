@@ -2298,6 +2298,13 @@ void cbRobot::Log(ostream &log, bool withActions)
        n += sprintf(xml+n, "/>\n");
     }
 
+    //LineSensor
+    char lineSensorStr[NLINESENSORELEMENTS+1]="";
+    for(int i=0;i<NLINESENSORELEMENTS;i++){
+        strcat(lineSensorStr,lineSensor->Value()[i]?"1":"0");
+    }
+	n += sprintf(xml+n, "\t\t<LineSensor Value=\"%s\" />\n", lineSensorStr);
+
 	n += sprintf(xml+n, "\t</Sensors>\n");
 	/* add end led information */
 	n += sprintf(xml+n, "\t<Leds EndLed=\"%s\" ReturningLed=\"%s\" VisitingLed=\"%s\"/>\n", 
