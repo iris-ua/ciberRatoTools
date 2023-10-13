@@ -21,12 +21,23 @@ model = PPO.load(args.model)
 rob = CRobLink("agentPPO", 0, args.server)
 
 action = np.array([0.0,0.0])
+
+obs = []
+for i in range(5):
+    rob.readSensors()
+    rob.driveMotors(0.15,0.15)
+
+    obsl = [float(x) for x in rob.measures.lineSensor]
+    obs = np.append(np.array(obsl),obs)
+
+
 while True:
     rob.readSensors()
 
     obsl = [float(x) for x in rob.measures.lineSensor]
     #obs = np.append(np.array(obsl),action)
-    obs = obsl
+    obs = np.append(np.array(obsl),obs[0:7*5])
+    #obs = obsl
 
     action, _states = model.predict(obs, deterministic=True)
 
