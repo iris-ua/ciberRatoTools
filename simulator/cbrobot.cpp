@@ -1853,6 +1853,15 @@ void cbRobot::updateScoreLineControl2023()
                         if (nextPathInd >= nCellPath) nextPathInd=0;
                         scoreControl += 10;
                     }
+                    else if (fabs(controlCellPath[(nextPathInd+1) % nCellPath].x - controlCellPath[(nextPathInd-1+nCellPath) % nCellPath].x)
+                            + fabs(controlCellPath[(nextPathInd+1) % nCellPath].y - controlCellPath[(nextPathInd-1+nCellPath) % nCellPath].y) < 1.1) {
+                        //fprintf(stderr,"at corner\n");
+                        if (fabs(controlCellPath[(nextPathInd+1)%nCellPath].x - curPos.X()*2.0) < 1.0 && fabs(controlCellPath[(nextPathInd+1)%nCellPath].y-curPos.Y()*2.0) < 1.0) {
+                            nextPathInd+=2;
+                            if (nextPathInd >= nCellPath) nextPathInd=0;
+                            scoreControl += 10;
+                        }
+                    }
 
                     // check if robot is outside line
                     bool outside=true;
