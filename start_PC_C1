@@ -1,0 +1,15 @@
+#!/bin/bash
+
+ARGS="--param ../Labs/pc-2324/C1-config.xml"
+ARGS+=" --lab ../Labs/pc-2324/C1-lab.xml"
+ARGS+=" --grid ../Labs/pc-2324/C1-grid.xml"
+ARGS+=" --scoring 1"
+(cd simulator; ./simulator $ARGS) &
+
+sleep 1
+
+(cd Viewer; ./Viewer --autoconnect)
+
+killall simulator
+
+echo Bye

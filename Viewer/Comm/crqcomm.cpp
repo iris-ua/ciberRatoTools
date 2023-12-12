@@ -228,6 +228,26 @@ void CRQComm::SendRequests()
 
 }
 
+void CRQComm::resetSimulator(void)
+{
+    if (!isConnected)
+        return;
+
+#ifdef DEBUG
+    cout << "CRQComm::resetSimulator\n";
+#endif
+
+    if( writeDatagram("<Reset/>\n", 9, serverAddress, port ) == -1 )
+    {
+		cerr << "Failure when writting <Reset/>" << endl;
+        exit (-1);
+    }
+
+}
+
+/*============================================================================*/
+
+
 /*============================================================================*/
 
 CRQComm::~CRQComm()

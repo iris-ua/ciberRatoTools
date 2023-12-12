@@ -81,6 +81,10 @@ public:
 	 */
 	void connect(void);
 
+	/*! Send the reset message to simulator 
+	 */
+	void resetSimulator(void);
+
 	/*! Close the score and control windows.
 	 */
 	void closeWindows(void);
@@ -109,7 +113,7 @@ public slots:
 	 */
     void SendRequests(void);
 private:
-    char control; // Aparecimento ou não da janela de controlo (not supported / no need)
+    char control; // Aparecimento ou nï¿½o da janela de controlo (not supported / no need)
 	char autoConnect;
     char autoStart;
 	CRRobot *robot;

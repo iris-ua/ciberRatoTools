@@ -806,40 +806,43 @@ void cbSimulator::ViewCommands()
 		{
 			switch (command.type)
 			{
-			case cbCommand::START:
-				// cout << "View command = Start\n";
-				start();
-				break;
-			case cbCommand::STOP:
-				// cout << "View command = Stop\n";
-				stop();
-				break;
-			case cbCommand::LABRQ:
-				// cout << "View command = LabReq\n";
-				cnt = lab->toXml(xml, sizeof(xml) - 1);
-				// cerr << xml;
-				views[i]->send(xml, cnt + 1);
-				break;
-			case cbCommand::GRIDRQ:
-				// cout << "View command = GridReq\n";
-				cnt = grid->toXml(xml, sizeof(xml) - 1);
-				views[i]->send(xml, cnt + 1);
-				break;
-			case cbCommand::ROBOTDEL:
-			{
-				// cout << "View command = RobotDel\n";
-				unsigned int id = command.robot.id;
-				if (id >= 1 && id <= robots.size())
-				{
-					cbRobot *robot = robots[id - 1];
-					if (robot != 0)
-						robot->remove();
-				}
-				break;
-			}
-			case cbCommand::UNKNOWN:
-				// cout << "View command = Unknown\n";
-				break;
+				case cbCommand::START:
+					//cout << "View command = Start\n";
+					start();
+					break;
+				case cbCommand::STOP:
+					//cout << "View command = Stop\n";
+					stop();
+					break;
+				case cbCommand::LABRQ:
+					//cout << "View command = LabReq\n";
+					cnt = lab->toXml(xml, sizeof(xml)-1);
+					//cerr << xml;
+					views[i]->send(xml, cnt+1);
+					break;
+				case cbCommand::GRIDRQ:
+					//cout << "View command = GridReq\n";
+					cnt = grid->toXml(xml, sizeof(xml)-1);
+					views[i]->send(xml, cnt+1);
+					break;
+				case cbCommand::ROBOTDEL:
+					{
+						//cout << "View command = RobotDel\n";
+						unsigned int id = command.robot.id;
+						if (id >=1 && id <= robots.size())
+						{
+                            cbRobot *robot = robots[id-1];
+                            if (robot != 0)
+                                robot->remove();
+                        }
+						break;
+					}
+				case cbCommand::RESET:
+					reset();
+					break;
+				case cbCommand::UNKNOWN:
+					//cout << "View command = Unknown\n";
+					break;
 			}
 		}
 	}

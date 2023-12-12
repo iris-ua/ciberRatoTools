@@ -96,8 +96,18 @@ END {
          nTargets++
      }
 
-     #robDist = (pathind-2)*2
-     #if(robDist < bestDist) robDist=bestDist
-     score = bestDist/robDist - nonVisitedTargets/nTargets
+     if (robDist==0) {
+	     score=0
+     }
+     else {
+        #robDist = (pathind-2)*2
+        #if(robDist < bestDist) robDist=bestDist
+	#print "robDist " robDist " bestDist " bestDist " nonVisitedTargets " nonVisitedTargets " nTargets " nTargets 
+        score = bestDist/robDist - nonVisitedTargets/nTargets
+	if (score > (nTargets - nonVisitedTargets)/nTargets) {
+            score = (nTargets - nonVisitedTargets)/nTargets
+        }
+
+     }
      print "Planning score: " score
 }

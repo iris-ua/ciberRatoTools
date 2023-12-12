@@ -105,6 +105,7 @@ void CRQLabView::on_actionConnect_toggled(bool connected)
     }
     else
     {
+        comm->resetSimulator();
         ui->actionConnect->setText("&Connect");
         ui->actionConnect->setToolTip("Connect");
         ui->actionConnect->setShortcut(Qt::CTRL+Qt::Key_C);

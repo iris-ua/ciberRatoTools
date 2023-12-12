@@ -71,6 +71,10 @@ bool cbViewHandler::startElement( const QString&, const QString&, const QString&
 	{
 		command.type = cbCommand::GRIDRQ;
 	}
+	else if (tag == "Reset")
+	{
+		command.type = cbCommand::RESET;
+	}
 	else
 	{
 		command.type = cbCommand::UNKNOWN;
@@ -121,6 +125,14 @@ bool cbViewHandler::endElement( const QString&, const QString&, const QString& q
 		if (command.type != cbCommand::ROBOTDEL)
 		{
 			cerr << "Missmatched end RobotRemove tag\n";
+			return false;
+		}
+	}
+	else if (tag == "Reset")
+	{
+		if (command.type != cbCommand::RESET)
+		{
+			cerr << "Missmatched end Reset tag\n";
 			return false;
 		}
 	}
