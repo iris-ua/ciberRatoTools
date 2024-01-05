@@ -10,10 +10,11 @@ NUM_LINE_ELEMENTS = 7
 class CRobLink:
 
 
-    def __init__ (self, robName, robId, host):
+    def __init__ (self, robName, robId, host, port=UDP_PORT):
         self.robName = robName
         self.robId = robId
         self.host = host
+        self.sim_port = port
 
         self.sock = socket.socket(socket.AF_INET, # Internet
                              socket.SOCK_DGRAM) # UDP
@@ -22,7 +23,7 @@ class CRobLink:
         
         msg = '<Robot Id="'+str(robId)+'" Name="'+robName+'" />'
         
-        self.sock.sendto(msg.encode(), (host, UDP_PORT))  # TODO consider host arg
+        self.sock.sendto(msg.encode(), (host, self.sim_port)) 
         data, (host,self.port) = self.sock.recvfrom(1024)
         # print("received message:", data, " port ", self.port)
 
@@ -93,11 +94,12 @@ class CRobLink:
 class CRobLinkAngs(CRobLink):
 
 
-    def __init__ (self, robName, robId, angs, host):
+    def __init__ (self, robName, robId, angs, host, port=UDP_PORT):
         self.robName = robName
         self.robId = robId
-        self.host = host
         self.angs = angs
+        self.host = host
+        self.sim_port = port
 
 
         self.sock = socket.socket(socket.AF_INET, # Internet
@@ -112,7 +114,7 @@ class CRobLinkAngs(CRobLink):
 
         #print "msg ", msg
         
-        self.sock.sendto(msg.encode(), (host, UDP_PORT))  # TODO condider host arg
+        self.sock.sendto(msg.encode(), (host, self.sim_port))  
         data, (host,self.port) = self.sock.recvfrom(1024)
         #print("received message:", data, " port ", self.port)
 
