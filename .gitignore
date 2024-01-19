@@ -9,3 +9,9 @@ ui_*.h
 *.out
 *.jar
 build
+.vscode
+Viewer/Viewer
+simulator/simulator
+logplayer/logplayer
+GUISample/GUISample
+robsample/robsample
