@@ -90,6 +90,11 @@ int main( int argc, char **argv )
 			i+=1;
             param->autoConnect = 'y';
         }
+        else if( strcmp(argv[i], "--noresetonconnect") == 0 )
+        {
+			i+=1;
+            param->resetOnConnectAction = 'n';
+        }
         else if( strcmp(argv[i], "--paramfile") == 0 )
         {
 			if(argc<i+2 || argv[i+1][0]=='-')
@@ -106,6 +111,7 @@ int main( int argc, char **argv )
 			cout << "                   [--nocontrol]\n";
 			cout << "                   [--autoconnect]\n";
 			cout << "                   [--autostart]\n";
+			cout << "                   [--noresetonconnect]\n";
 			cout << "                   [--help]\n";
             exit(0);
         }

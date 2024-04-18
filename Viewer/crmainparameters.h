@@ -70,6 +70,8 @@ public:
 	char autoConnect;
 
 	char control;
+
+	char resetOnConnectAction;
 };
 #endif
 
