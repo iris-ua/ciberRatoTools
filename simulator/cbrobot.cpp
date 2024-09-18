@@ -778,17 +778,18 @@ void cbRobot::updateStateControl()
                       struct cell_t cell = newCell;
                       controlCellPath[nCellPath]=cell;
                       nCellPath++;
-                      for(d=-90; d<=90; d+=90) { 
+                      int test_dirs[3] = {0, -90, 90};
+                      for(d=0; d<3; d++) { 
                          if(simulator->Lab()->reachable(cbPoint(newCell.x*2.0+1,newCell.y*2.0+1),
-                                                     cbPoint(newCell.x*2+1+cos((d+dir)*M_PI/180.0)*2.0,newCell.y*2+1+sin((d+dir)*M_PI/180.0)*2.0))){
-                             newCell.x = round(cell.x + cos((dir+d)*M_PI/180.0));
-                             newCell.y = round(cell.y + sin((dir+d)*M_PI/180.0));
-                             dir = (dir + d + 360) % 360;
+                                                     cbPoint(newCell.x*2+1+cos((test_dirs[d]+dir)*M_PI/180.0)*2.0,newCell.y*2+1+sin((test_dirs[d]+dir)*M_PI/180.0)*2.0))){
+                             newCell.x = round(cell.x + cos((dir+test_dirs[d])*M_PI/180.0));
+                             newCell.y = round(cell.y + sin((dir+test_dirs[d])*M_PI/180.0));
+                             dir = (dir + test_dirs[d]+ 360) % 360;
 
                              break;
                          } 
                       }
-                      if(d==180) {
+                      if(d==3) {
                             fprintf(stderr, "Lab has no Loop! Does not fit for this challenge!\n"); // TODO: add Graphical Window Warning
                             QMessageBox::critical(0,"Error", "Lab has no Loop! Does not fit for this challenge!\n", QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
 
