@@ -6,7 +6,7 @@ ARGS+=" --grid ../Labs/rmi-2425/C1-grid.xml"
 ARGS+=" --scoring 1"
 (cd simulator; ./simulator $ARGS) &
 
-sleep 1
+sleep 2
 
 (cd Viewer; ./Viewer --autoconnect)
 
