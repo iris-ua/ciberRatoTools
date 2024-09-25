@@ -21,7 +21,7 @@
 * \sa deltah
 */
 typedef enum {
-  NONE,           /**< No control action */
+  NONE,           /**< No control action, no feedback */
   BANG,           /**< Bang-bang control, unidirectional */
   BANG2,          /**< Bang-bang control, bipolar */
   BANGH,          /**< Bang-bang control with histeresis. */

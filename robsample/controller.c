@@ -9,7 +9,7 @@
 
 const float h = 0.050;    // h  - sampling interval
 
-const controller_t activeController=P;
+const controller_t activeController=PID;
 
 /*
 * Constants for the controller
@@ -31,7 +31,7 @@ const float max_u = 10;  // max_u - saturation value for control signal
 
 /* hysteresis for bang-bang controller */
 const float deltah=0.05;
-const float bangvalue = 0.2;
+const float bangvalue = 0.5;
 
 float controller(controller_t type, float r, float y)
 {

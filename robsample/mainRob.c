@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
   // to know if there is a wall on top of cell(i,j) (i in 0..5), check if the value of lmap[i*2+1][j*2] is space or not
 
   float posOverLine;                    /* Position over the line */
-  float velSetPoint=0.1;                /* Velocity set point */
+  float velSetPoint=0.15;                /* Velocity set point */
   bool moving = false;
 
   printf( " Sample Robot\n Copyright (C) 2001-2022 Universidade de Aveiro\n" );
@@ -134,8 +134,13 @@ int main(int argc, char *argv[])
 
     /* Compute left and right command for steering the robot, using the
        active controller */
-    lPow = velSetPoint - controller(activeController,0,posOverLine);
-    rPow = velSetPoint + controller(activeController,0,posOverLine);
+    float u = controller(activeController, 0, posOverLine);
+    /* controller() may return a NaN.
+    lPow and rPow are updated only if the returned value is a valid number. */
+    if (!isnan(u)) {
+      lPow = velSetPoint - u;
+      rPow = velSetPoint + u;
+    }
 
     /* Act on the system */
     DriveMotors(lPow,rPow);
@@ -155,7 +160,9 @@ int main(int argc, char *argv[])
       fprintf(fd, "%4.5f\t", posOverLine);
       /* Motor commands */
       fprintf(fd, "%4.5f\t", lPow);
-      fprintf(fd, "%4.5f\n", rPow);
+      fprintf(fd, "%4.5f\t", rPow);
+      fprintf(fd, "%4.5f\n", u);
+      
     }
 
   }

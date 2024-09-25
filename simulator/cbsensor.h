@@ -363,7 +363,7 @@ private:
 };
 
 /*! \class LineSensor
-	\brief LineGrondSensor
+	\brief LineGroundSensor
 
 */
 

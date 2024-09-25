@@ -1,4 +1,4 @@
-<Lab Name="RMI 22-23 Line following Control Lab" Height="14" Width="28">
+<Lab Name="RMI 24-25 Line following Control Lab" Height="14" Width="28">
 		<Beacon X="27" Y="10.0" Height="4.0"/>
 		<Target X="27" Y="10.0" Radius="1.0"/>
 		<Row  Pos="12"  Height="0.0" Pattern="                                         " />

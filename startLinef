@@ -19,7 +19,7 @@ sleep 2
 killall Viewer
 killall simulator
 
-# (cd robsample; octave --eval 'load("output.txt");figure;plot(output(:,1),output(:,2),"-;pos Error;",output(:,1),output(:,3),"-;posOverLine;",output(:,1),output(:,4),"-;lPow;",output(:,1),output(:,5),"-;rPow;");pause')
-(cd robsample; octave --eval 'load("output.txt");figure;plot(output(:,1),output(:,2),"-;pos Error;",output(:,1),output(:,3),"-;sensor reading;");pause')
+(cd robsample; octave --eval 'load("output.txt");figure;plot(output(:,1),output(:,2),"-;pos Error;",output(:,1),output(:,3),"o;sensor;",output(:,1),output(:,6),"-;u;");pause')
+# (cd robsample; octave --eval 'load("output.txt");figure;plot(output(:,1),output(:,2),"-;pos Error;",output(:,1),output(:,3),"o;sensor reading;");pause')
 
 echo Bye
