@@ -1,0 +1,24 @@
+<Lab Name="RMI-2425 C2 Lab" Height="14" Width="28">
+		<Beacon X="3"  Y="11.0" Height="5.0"/>
+		<Target X="3"  Y="11.0" Radius="1.0"/>
+		<Beacon X="19" Y="7.0"  Height="2.0"/>
+		<Target X="19" Y="7.0"  Radius="1.0"/>
+		<Beacon X="5"  Y="3.0"  Height="2.0"/>
+		<Target X="5"  Y="3.0"  Radius="1.0"/>
+		<Beacon X="25" Y="9.0"  Height="2.0"/>
+		<Target X="25" Y="9.0"  Radius="1.0"/>
+		<Row  Pos="12" Pattern="           |              |              "  />
+		<Row  Pos="11" Pattern="--+--+  +--+  +--+--+--+  +  +--+  +--+  "  />
+		<Row  Pos="10" Pattern="   HH         |        |  |              "  />
+		<Row  Pos="9"  Pattern="  +--+  +  +  +  +--+--+  +--+  +--+--+  "  />
+		<Row  Pos="8"  Pattern="     |           |     |     |     |     "  />
+		<Row  Pos="7"  Pattern="--+  +  +--+  +--+  +  +--+  +  +  +--+  "  />
+		<Row  Pos="6"  Pattern="  |  |        |     |  |  |        |     "  />
+		<Row  Pos="5"  Pattern="--+  +--+--+--+  +  +  +--+--+  +  +--+  "  />
+		<Row  Pos="4"  Pattern="     |              |  |        |        "  />
+		<Row  Pos="3"  Pattern="  +--+  +--+--+--+  +  +  +--+--+  +--+  "  />
+		<Row  Pos="2"  Pattern="  |  |  |           |     |      TT      "  />
+		<Row  Pos="1"  Pattern="  +--+  +  +--+--+  +--+--+  +--+--+--+  "  />
+		<Row  Pos="0"  Pattern="                                         "  />
+</Lab>
+

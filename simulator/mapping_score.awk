@@ -4,8 +4,8 @@ BEGIN {
    line=1;
    margin=2
    discount=0.85
-   linelength=49
-   nlines=21
+   linelength=55
+   nlines=27
    for(di=-margin; di<=margin; di++) {
         for(dj=-margin; dj<=margin; dj++) {
             score[di][dj]=0;

@@ -5,8 +5,8 @@ BEGIN {
    pathind = 1
    robDist = 0
 
-   linelength=49
-   nlines=21
+   linelength=55
+   nlines=27
 
    exiting=0
 }
@@ -46,7 +46,7 @@ FNR==NR {
     else {
         movdirX = (x - prevX)/2
         movdirY = (y - prevY)/2
-        if(mapref[prevY+movdirY+(nlines+1)/2][prevX+movdirX+(linelength+1)/2]==" ") {
+        if(mapref[prevY+movdirY+(nlines+1)/2][prevX+movdirX+(linelength+1)/2]!="X") {
              print "prevY",prevY, "prevX", prevX ,"movY", movdirY ,"movX", movdirX
              print "Error in path"
              print "Planning score: " 0

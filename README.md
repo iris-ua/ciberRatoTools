@@ -80,6 +80,6 @@ To run the simulator, Viewer and C++ agent, execute (at the repository base dir)
   University of Aveiro,
   efp@ua.pt
 
- Copyright (C) 2001-2022 Universidade de Aveiro
+ Copyright (C) 2001-2024 Universidade de Aveiro
 
 

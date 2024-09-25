@@ -30,6 +30,7 @@ CRMainParameters::CRMainParameters()
 	autoConnect = 'n';
 	control = 'y';
 	autoStart = 'n';
+    resetOnConnectAction = 'y';
 }
 
 CRMainParameters::~CRMainParameters()
