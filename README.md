@@ -53,6 +53,12 @@ controlOrder=1;
 
 Note that, in this experiment, the robot may not start correctly positioned over the line and aligned in the proper direction. Check `linef-grid.xml` that defines the starting position and orientation. You can try to change these values to test the performance of a controller. 
 
+The speed set-point for the motors is defined in [mainrob.c](robsample/mainRob.c), line 36:
+```C
+float velSetPoint=0.5; /* Velocity set point */ 
+```
+
+
 ## Contents
 
 * simulator -           The simulator source code
