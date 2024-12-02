@@ -1,4 +1,4 @@
-from gym import Env,spaces
+import gymnasium as gym
 import numpy as np
 import subprocess
 import socket
@@ -11,7 +11,7 @@ import croblink
 SIM_IP = "127.0.0.1"
 SIM_PORT = 6000
 
-class CiberEnv1(Env):
+class CiberEnv1(gym.Env):
     def __init__(self, obs_space, act_space, sim_args) -> None:
         super().__init__()
 
