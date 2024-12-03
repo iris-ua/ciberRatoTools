@@ -135,7 +135,6 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
                 bool inHorizontalWall=false;
                 int horWallStartCol, horWallEndCol;
                 while (!spec->isNull()) {
-                    if(row % 2 == 0) { // only vertical or diagonal walls are allowed here
                         if(spec->toLatin1()=='|') {
 		            		wall = new cbWall;
                             wall->addCorner (((col+1)/3.0)*PATHCUBESIZE-PATHWALLWIDTH*0.5, (row*0.5+PATHWALLGAP)*PATHCUBESIZE);
@@ -166,9 +165,7 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
 
                             lab->addWall(wall);
                    		}
-					}
-                    else {// only horizontal walls are allowed at odd rows
-                       if(col % 3 ==0) { // if there is a wall at this collumn then there must also be a wall in the next one
+                       	else if(col % 3 ==0) { // if there is a wall at this collumn then there must also be a wall in the next one
 
                            // start of horizontal wall
                            if(spec->toLatin1()=='-' && ! inHorizontalWall) {
@@ -193,7 +190,12 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
                                wall->addCorner ((horWallEndCol/3.0+1.0-PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5)*PATHCUBESIZE-PATHWALLWIDTH*0.5);
                                wall->addCorner ((horWallEndCol/3.0+1.0-PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5)*PATHCUBESIZE+PATHWALLWIDTH*0.5);
                                wall->addCorner ((horWallStartCol/3.0+PATHWALLGAP)*PATHCUBESIZE, ((row+1)*0.5)*PATHCUBESIZE+PATHWALLWIDTH*0.5);
-							   wall->setHeight(height);
+								if (row % 2 == 1) {
+							         wall->setHeight(height);
+								}
+								else {
+							         wall->setHeight(0.0);  // horizontal walls in middle of cells
+								}
 
                                lab->addWall(wall);
 
@@ -206,7 +208,6 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
                         wall->addCorner ((col*0.5+1.0)*CUBESIZE, (row*0.5+0.55)*CUBESIZE);
                         wall->addCorner ((col*0.5+1.0)*CUBESIZE, (row*0.5+0.45)*CUBESIZE);
 */
-                   }
                    spec++;
                    col++;
                }
