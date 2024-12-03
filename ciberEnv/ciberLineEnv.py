@@ -4,6 +4,8 @@ import subprocess
 import socket
 import time
 from stable_baselines3 import PPO
+from stable_baselines3.common.evaluation import evaluate_policy
+
 
 from ciberEnv1.ciberEnv1 import CiberEnv1
 
@@ -61,12 +63,14 @@ c_env = CiberLineEnv()
 
 # Learn model
 model = PPO("MlpPolicy", c_env, verbose=1)
-model.learn(200000)
+model.learn(20000)
 
 # Save model
 model.save("ciberlinenev_ppo_1")
 
 # Evaluate the agent
-mean_reward, std_reward = gym.evaluate_policy(model, model.get_env(), n_eval_episodes=10)
+mean_reward, std_reward = evaluate_policy(model, model.get_env(), n_eval_episodes=10)
 print("evaluate mean", mean_reward, "std", std_reward)
 
+# Close Environment
+c_env.close()
