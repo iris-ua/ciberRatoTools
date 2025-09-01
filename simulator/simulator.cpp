@@ -1,7 +1,7 @@
 /*
     This file is part of ciberRatoToolsSrc.
 
-    Copyright (C) 2001-2021 Universidade de Aveiro
+    Copyright (C) 2001-2025 Universidade de Aveiro
 
     ciberRatoToolsSrc is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -153,7 +153,7 @@ void CommandLineError()
 int main(int argc, char *argv[])
 {
 	/* Copyright and wellcome message */
-    printf(" CiberRato 2021 Simulator\n Copyright (C) 2001-2021 Universidade de Aveiro\n");
+    printf(" CiberRato 2024 Simulator\n Copyright (C) 2001-2025 Universidade de Aveiro\n");
     fflush(stdout);
 
 	/* extract option values */

@@ -1,7 +1,7 @@
 /*
     This file is part of ciberRatoToolsSrc.
 
-    Copyright (C) 2001-2021 Universidade de Aveiro
+    Copyright (C) 2001-2025 Universidade de Aveiro
 
     ciberRatoToolsSrc is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -275,9 +275,9 @@ void cbSimulatorGUI::on_actionSave_Configuration_triggered()
 
 void cbSimulatorGUI::on_actionAbout_Simulator_triggered()
 {
-    QMessageBox::about(this,"About Explorer 2021 simulator",
-         "<b>Explorer 2021 simulator</b><br>"
-         "Copyright 2001-2021 Universidade de Aveiro<br>"
+    QMessageBox::about(this,"About Explorer 2024 simulator",
+         "<b>Explorer 2024 simulator</b><br>"
+         "Copyright 2001-2025 Universidade de Aveiro<br>"
          "http://microrato.ua.pt"
          );
 }
