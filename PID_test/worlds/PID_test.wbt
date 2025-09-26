@@ -1,4 +1,4 @@
-#VRML_SIM R2025a utf8
+#VRML_SIM R2023b utf8
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
@@ -6,10 +6,17 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/project
 
 WorldInfo {
   basicTimeStep 10
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        50
+      ]
+    }
+  ]
 }
 Viewpoint {
-  orientation -0.016019540730180328 0.01843856123585575 0.9997016523815222 1.4310946786711372
-  position -0.7047514039019981 -4.384280804804 0.7310858020735161
+  orientation -0.1355927009838727 0.013660404116278101 0.990670486488458 2.9426604547918522
+  position 3.694974155107122 -0.13105166549314287 1.4920579434024481
   follow "Thymio II"
 }
 TexturedBackground {
