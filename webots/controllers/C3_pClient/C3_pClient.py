@@ -26,6 +26,10 @@ while robot.step(timestep) != -1:
     # Read the sensors:
     # Enter here functions to read sensor data, like:
     #  val = ds.getValue()
+    
+    #if(robot.getTime()>10.0):
+    #    exit(0)
+
 
     # Process sensor data here.
 

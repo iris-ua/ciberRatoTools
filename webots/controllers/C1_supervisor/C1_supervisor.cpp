@@ -5,6 +5,12 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <signal.h>
+
+
 
 #include <QFile>
 #include <QXmlSimpleReader>
@@ -12,8 +18,11 @@
 
 #include "cblabhandler.h"
 
-// Define the maximum duration of the simulation in seconds
-#define MAX_TIME_SECONDS 200.0
+// Define the default maximum duration of the simulation in seconds
+// This value can be overridden by the envoronment variable MAX_TIME
+// Example: export MAX_TIME=60
+double MAX_TIME_SECONDS = 300.0;
+
 #define M_PI 3.14159265358979323846
 
 struct cell_t
@@ -29,6 +38,43 @@ int scoreControl = 0;
 webots::Node *epuck_node;
 
 #define PATHCUBESIZE (0.15)
+
+pid_t get_sibling_pid() {
+    FILE *fp;
+    char buffer[1024];
+    char command[1024];
+    pid_t sibling_pid=0;
+
+    // Construct the command string:
+    // pgrep -P [my_parent_pid] | grep -v [my_pid]
+    snprintf(command, sizeof(command), 
+             "pgrep -P %d | grep -v %d", getppid(), getpid());
+
+    // Open a pipe to execute the command
+    fp = popen(command, "r");
+    if (fp == NULL) {
+        perror("popen failed");
+        return 0;
+    }
+
+    // Read the output line by line (each line contains one PID)
+    while (fgets(buffer, sizeof(buffer), fp) != NULL) {
+        // Convert the string PID to an integer
+        sibling_pid = atoi(buffer);
+    }
+
+    // Close the pipe
+    pclose(fp);
+    
+    return sibling_pid;
+}
+
+bool is_pid_running(int pid) {
+    if (pid <= 0) return false;
+    // Sending signal 0 to a PID checks if the process is alive without killing it.
+    // Returns 0 if process exists, -1 if it doesn't.
+    return (kill(pid, 0) == 0);
+}
 
 struct cell_t getRobotCell()
 {
@@ -110,6 +156,24 @@ int main(int argc, char **argv)
     int timeStep = (int)supervisor->getBasicTimeStep();
 
     // ---
+    // 1a. GET MAXIMUM SIMULATION TIME
+    // ---
+
+    char *maxTimeEnv = getenv("MAX_TIME");
+    if (maxTimeEnv != NULL)
+    {
+        char *pend;
+        double maxTime = strtod(maxTimeEnv, &pend);
+        if(*pend=='\0' && pend != maxTimeEnv) {
+             MAX_TIME_SECONDS = maxTime;
+        }
+        else {
+            fprintf(stderr,"Could not get max_time from MAX_TIME value (%s)\n", maxTimeEnv);
+        }
+    }
+    std::cerr << "Maximum Simulation Time: " << MAX_TIME_SECONDS << " s\n";
+
+    // ---
     // 2. GET SCENE TREE NODES
     // ---
 
@@ -122,6 +186,7 @@ int main(int argc, char **argv)
     // 3. DEFINE AND CREATE NEW OBJECTS
     // ---
 
+    // Read lab file and create maze walls in webots
     char lab_filename[1024 * 8] = "C1-lab.xml";
     QXmlInputSource *source;
 
@@ -152,10 +217,13 @@ int main(int argc, char **argv)
         exit(0);
     }
 
+    // create the cell path of the closed loop to be used by update_score
     build_cell_path(labHandler->getLab());
 
+    // get robot
     epuck_node = supervisor->getFromDef("EPUCK");
 
+    // Reposition robot to first target area of maze
     webots::Field *translationField = epuck_node->getField("translation");
     if (translationField) {
         // Define the new position (e.g., move to X=1.0, Y=2.0)
@@ -165,6 +233,14 @@ int main(int argc, char **argv)
         translationField->setSFVec3f(newTranslation);
         //std::cout << "E-puck repositioned." << std::endl;
     }
+    
+    // Get the PID of robot controller
+    int robot_pid = get_sibling_pid();
+
+    if (robot_pid == 0) {
+        fprintf(stderr,"Could not get Robot Controller PID.\n");
+        supervisor->simulationQuit(2);
+    }    
 
     // ---
     // 4. MAIN LOOP (Optional)
@@ -176,6 +252,13 @@ int main(int argc, char **argv)
     {
         // Get the current simulation time.
         double currentTime = supervisor->getTime();
+
+        if (robot_pid > 0 && !is_pid_running(robot_pid)) {
+            printf("Robot controller finished at time %f.\n", currentTime);
+            
+            //supervisor->simulationQuit(0); 
+            break;
+        }
 
         std::string scoreText;
 

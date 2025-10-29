@@ -39,6 +39,10 @@ near_front = 100
 near_side = 90
 
 while robot.step(timeStep) != -1:
+
+    # if(robot.getTime()>10.0):
+        # exit(0)
+
     dist_sensor_values = [g.getValue() for g in dist_sensors]
     
     print(dist_sensor_values)
