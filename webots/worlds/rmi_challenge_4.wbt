@@ -1,0 +1,58 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puck.proto"
+IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidBox.proto"
+
+WorldInfo {
+  basicTimeStep 16
+}
+Viewpoint {
+  orientation 0.6094733083114768 -0.5617910235803266 -0.5594042655186253 4.272398853321251
+  position 2.530483936988994 1.919560387943068 10.157185582405269
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 3.975 1.875 0
+  floorSize 7.95 3.75
+  floorTileSize 0.15 0.15
+  floorAppearance PBRAppearance {
+    baseColorMap ImageTexture {
+      url [
+        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/samples/curriculum/worlds/textures/arena_floor.jpg"
+      ]
+    }
+    roughness 1
+    metalness 0
+  }
+  wallHeight 0.05
+  wallAppearance PBRAppearance {
+    roughness 1
+    metalness 0
+  }
+}
+DEF EPUCK E-puck {
+  translation 0.075 0.075 0
+  controller "C4_pClient"
+  window "botstudio"
+  customData "FinalTime 300.0 NTargets 3"
+  camera_width 32
+  camera_height 32
+  camera_rotation 0 1 0 0.47
+  distance_sensor_numberOfRays 4
+  turretSlot [
+    Compass {
+      resolution 0.1
+    }
+  ]
+}
+DEF SUPERVISOR Robot {
+  name "supervisor"
+  controller "C3_supervisor"
+  supervisor TRUE
+}
