@@ -22,7 +22,7 @@
 // Define the default maximum duration of the simulation in seconds
 // This value can be overridden by the envoronment variable MAX_TIME
 // Example: export MAX_TIME=60
-double MAX_TIME_SECONDS = 300.0;
+double MAX_TIME_SECONDS = 450.0;
 
 #define M_PI 3.14159265358979323846
 
