@@ -273,7 +273,7 @@ void determine_lab_map_centered_on_robot_initial_pos(cbLab *lab)
     }
 
     // add vertical links
-    for (float x = PATHCUBESIZE * 0.5; x < lab->Width() - PATHCUBESIZE; x += PATHCUBESIZE)
+    for (float x = PATHCUBESIZE * 0.5; x < lab->Width(); x += PATHCUBESIZE)
     {
         for (float y = PATHCUBESIZE * 0.5; y < lab->Height() - PATHCUBESIZE; y += PATHCUBESIZE)
         {
@@ -461,6 +461,7 @@ int main(int argc, char **argv)
     if (robot_pid == 0) {
         fprintf(stderr,"Could not get Robot Controller PID.\n");
         supervisor->simulationQuit(2);
+        exit(2);
     }    
 
     
