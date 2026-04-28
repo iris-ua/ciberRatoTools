@@ -120,7 +120,7 @@ int main( int argc, char **argv )
 
 	cout << "\n\tUniversidade de Aveiro\n";
 	cout << "\tDepartamento de Electronica, Telecomunicacoes e Informatica\n";
-    cout << "\tExplorer 2024\n";
+    cout << "\tExplorer 2026\n";
     cout << "\n\tViewer v2.0\n\n";
     cout << "\tAntonio Neves \t\tan@ieeta.pt\n";
     cout << "\tJoao Figueiredo \tjoao.figueiredo@hotpop.com\n";
@@ -151,7 +151,7 @@ int main( int argc, char **argv )
     //fflush( stdout );
 	
     CRQLabView *labGUI = new CRQLabView(param);  //Built view
-    labGUI->setWindowTitle("Explorer 2024");
+    labGUI->setWindowTitle("Explorer 2026");
     labGUI->show();
 
     Visualizador.connect( &Visualizador, SIGNAL( lastWindowClosed() ),
