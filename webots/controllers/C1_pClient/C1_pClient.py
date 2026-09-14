@@ -22,6 +22,10 @@ rightMotor = robot.getDevice("right wheel motor")
 dist_sensors = [robot.getDevice('ps' + str(x)) for x in range(num_dist_sensors)]  # distance sensors
 list(map((lambda s: s.enable(timeStep)), dist_sensors))  # Enable all distance sensors
 
+# Get ground sensors.
+ground_sensors = [robot.getDevice('gs' + str(x)) for x in range(3)]  # ground sensors
+list(map((lambda s: s.enable(timeStep)), ground_sensors))  # Enable all ground sensors
+
 # Disable motor PID control mode.
 leftMotor.setPosition(float('inf'))
 rightMotor.setPosition(float('inf'))
@@ -44,8 +48,10 @@ while robot.step(timeStep) != -1:
         # exit(0)
 
     dist_sensor_values = [g.getValue() for g in dist_sensors]
+    ground_sensor_values = [g.getValue() for g in ground_sensors]
     
-    print(dist_sensor_values)
+    #print(dist_sensor_values)
+    print(ground_sensor_values)
 
     if dist_sensor_values[0] > near_front \
        or dist_sensor_values[7] > near_front:
