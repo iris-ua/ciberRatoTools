@@ -83,16 +83,16 @@ struct cell_t getRobotCell()
     {
         const double *position = epuck_node->getPosition();
         // std::cout << "e-puck position: x=" << position[0] << " y=" << position[1] << " z=" << position[2] << std::endl;
-        cell.x = static_cast<int>(position[0] / PATHCUBESIZE);
-        cell.y = static_cast<int>(position[1] / PATHCUBESIZE);
+        cell.x = static_cast<int>(position[0] / (PATHCUBESIZE/2.0)+0.5);
+        cell.y = static_cast<int>(position[1] / (PATHCUBESIZE/2.0)+0.5);
     }
     return cell;
 }
 
 void build_cell_path(cbLab *lab)
 {
-    controlCellPath[0].x = lab->Target(0)->Center().x / PATHCUBESIZE;
-    controlCellPath[0].y = lab->Target(0)->Center().y / PATHCUBESIZE;
+    controlCellPath[0].x = lab->Target(0)->Center().x / (PATHCUBESIZE/2.0)+0.5;
+    controlCellPath[0].y = lab->Target(0)->Center().y / (PATHCUBESIZE/2.0)+0.5;
 
     fprintf(stderr, "::: %d, %d %d %f\n", controlCellPath[0].x, controlCellPath[0].y, lab->nTargets(), lab->Target(0)->Center().x);
 
@@ -111,8 +111,8 @@ void build_cell_path(cbLab *lab)
         int test_dirs[3] = {0, -90, 90};
         for (d = 0; d < 3; d++)
         {
-            if (lab->reachable(cbPoint(newCell.x * PATHCUBESIZE + PATHCUBESIZE / 2.0, newCell.y * PATHCUBESIZE + PATHCUBESIZE / 2.0),
-                               cbPoint(newCell.x * PATHCUBESIZE + PATHCUBESIZE / 2.0 + cos((test_dirs[d] + dir) * M_PI / 180.0) * PATHCUBESIZE, newCell.y * PATHCUBESIZE + PATHCUBESIZE / 2.0 + sin((test_dirs[d] + dir) * M_PI / 180.0) * PATHCUBESIZE)))
+            if (lab->reachable(cbPoint(newCell.x * PATHCUBESIZE/2.0, newCell.y * PATHCUBESIZE/2.0),
+                               cbPoint(newCell.x * PATHCUBESIZE/2.0 + cos((test_dirs[d] + dir) * M_PI / 180.0) * PATHCUBESIZE/2.0, newCell.y * PATHCUBESIZE/2.0 + sin((test_dirs[d] + dir) * M_PI / 180.0) * PATHCUBESIZE/2.0)))
             {
                 newCell.x = round(cell.x + cos((dir + test_dirs[d]) * M_PI / 180.0));
                 newCell.y = round(cell.y + sin((dir + test_dirs[d]) * M_PI / 180.0));
@@ -144,6 +144,18 @@ void update_score()
         if (nextPathInd >= nCellPath)
             nextPathInd = 0;
         scoreControl += 10;
+    }
+    // check if robot is outside line
+
+    bool outside=true;
+    for(int c=0 ; c < nCellPath; c++) {
+        if(controlCellPath[c].x == curCell.x && controlCellPath[c].y==curCell.y){
+            outside = false;
+            break;
+        }
+    }
+    if (outside) {
+        scoreControl -=10;
     }
 }
 

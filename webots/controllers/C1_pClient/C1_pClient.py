@@ -11,7 +11,7 @@ robot = Robot()
 timeStep = int(robot.getBasicTimeStep())
 
 # Constants of the e-puck motors and distance sensors.
-cruiseVelocity = 5.0
+cruiseVelocity = 3.0
 num_dist_sensors = 8
 
 # Get left and right wheel motors.
@@ -38,9 +38,7 @@ rightMotor.setVelocity(cruiseVelocity)
 camera = robot.getDevice("camera")
 camera.enable(timeStep)
 
-
-near_front = 100
-near_side = 90
+white_threshold = 500
 
 while robot.step(timeStep) != -1:
 
@@ -53,16 +51,16 @@ while robot.step(timeStep) != -1:
     #print(dist_sensor_values)
     print(ground_sensor_values)
 
-    if dist_sensor_values[0] > near_front \
-       or dist_sensor_values[7] > near_front:
+    if ground_sensor_values[0] > white_threshold \
+       and dist_sensor_values[2] > white_threshold:
         print('rotate')
         leftMotor.setVelocity (-cruiseVelocity)
         rightMotor.setVelocity( cruiseVelocity)
-    elif dist_sensor_values[1]>near_side and dist_sensor_values[1]>dist_sensor_values[6]:
+    elif ground_sensor_values[2] > white_threshold:
         print('turn left')
         leftMotor.setVelocity ( 0.1*cruiseVelocity)
         rightMotor.setVelocity( 1.2*cruiseVelocity)
-    elif dist_sensor_values[6]>near_side:
+    elif ground_sensor_values[0] > white_threshold:
         print('turn right')
         leftMotor.setVelocity ( 1.2*cruiseVelocity)
         rightMotor.setVelocity( 0.1*cruiseVelocity)

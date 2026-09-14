@@ -5,12 +5,13 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puck.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puckGroundSensors.proto"
 
 WorldInfo {
 }
 Viewpoint {
-  orientation 0.4822195087135361 -0.4405198214046284 -0.7572361800427331 4.587411896061048
-  position 0.32938052033384785 -1.363693439957094 3.7394720015908534
+  orientation 0.42335033659529586 -0.35699764802709205 -0.8326626999018115 4.639438507504511
+  position 0.5081811925254414 -1.3718289867528157 2.577955225276093
 }
 TexturedBackground {
 }
@@ -21,11 +22,6 @@ RectangleArena {
   floorSize 2.1 1.05
   floorTileSize 0.15 0.15
   floorAppearance PBRAppearance {
-    baseColorMap ImageTexture {
-      url [
-        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/samples/curriculum/worlds/textures/arena_floor.jpg"
-      ]
-    }
     roughness 1
     metalness 0
   }
@@ -43,6 +39,10 @@ DEF EPUCK E-puck {
   camera_height 32
   camera_rotation 0 1 0 0.47
   distance_sensor_numberOfRays 4
+  groundSensorsSlot [
+    E-puckGroundSensors {
+    }
+  ]
 }
 DEF SUPERVISOR Robot {
   name "supervisor"

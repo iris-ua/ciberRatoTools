@@ -27,7 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-
+#include <math.h>
 
 #include <algorithm>
 
@@ -247,10 +247,25 @@ bool cbLab::reachable(cbPoint i,cbPoint f)
 {
     double distIF,dirIF,distWall;
 
-    dirIF=(f-i).angle();
-    distIF=i.distance(f);
+    dirIF = (f-i).angle();
+    distIF = i.distance(f);
 
-    distWall=wallDistance(i,dirIF);       
+	std::cerr << "cbLab::reachable i(" << i.x/(0.15/2.0) << "," << i.y/(0.15/2.0) << "), f(" << f.x/(0.15/2.0) << "," << f.y/(0.15/2.0) << "), distIF=" << distIF << ", dirIF=" << dirIF*180.0/M_PI << "\n";
+
+	if(isInside(cbPoint(i.x+cos(dirIF)*0.2*distIF,i.y+sin(dirIF)*0.2*distIF))) {
+		std::cerr << "cbLab::reachable true\n";
+	    return true;
+	}
+	else {
+		std::cerr << "cbLab::reachable false\n";
+		return false;
+	}
+
+
+    // dirIF=(f-i).angle();
+    // distIF=i.distance(f);
+
+    // distWall=wallDistance(i,dirIF);       
 
 //    fprintf(stderr,"reach i(%5.3f,%5.3f),f(%5.3f,%5.3f) dist=%5.3f angle=%5.3f"
 // 		   " distWall=%5.3f\n",

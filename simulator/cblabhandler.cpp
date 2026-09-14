@@ -77,7 +77,7 @@ std::string vertical_wall_string =
 "        metalness 0"
 "      }"
 "      geometry Box {"
-"        size 0.02 %7.4f 0.0002"
+"        size 0.014 %7.4f 0.0002"
 "      }"
 "    }"
 "  ]"
@@ -95,7 +95,7 @@ std::string horizontal_wall_string =
 "        metalness 0"
 "      }"
 "      geometry Box {"
-"        size %7.4f 0.02 0.0002"
+"        size %7.4f 0.014 0.0002"
 "      }"
 "    }"
 "  ]"
@@ -170,10 +170,10 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
 		const QString &radius_at = attr.value(QString("Radius"));
 		if (!radius_at.isNull()) radius = radius_at.toDouble();
         float id_color[N_TARGET_COLORS][3] = {{1.0,0.0,0.0},
-                          {0.0,0.0,1.0},
+                          {0.2,1.0,1.0},
                           {1.0,1.0,0.0},
                           {1.0,0.0,1.0},
-                          {0.0,1.0,1.0},
+                          {0.45,1.0,1.0},
                           {1.0,0.45,0.0},
                           {0.0,0.0,0.0}};
         char target_str[1024*8];
