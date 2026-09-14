@@ -66,30 +66,40 @@ std::string target_string =
 
 
 std::string vertical_wall_string =
-    "SolidBox {"
-    "  translation %7.4f %7.4f 0.025"
-    "  rotation 0 0 1 0"
-    "      appearance PBRAppearance {"
-    "        baseColor 1.0 1.0 1.0"
-    "        roughness 0.5"
-    "        metalness 0"
-    "      }"
-      "        size 0.02 %7.4f 0.05"
-    "  name \"%s\""
-    "}";
+"Transform {"
+"  translation  %7.4f %7.4f 0.0001"
+"  rotation 0 0 1 0"
+"  children ["
+"    Shape {"
+"      appearance PBRAppearance {"
+"        baseColor 0 0 0"
+"        roughness 0.5"
+"        metalness 0"
+"      }"
+"      geometry Box {"
+"        size 0.02 %7.4f 0.0002"
+"      }"
+"    }"
+"  ]"
+"}";
 
 std::string horizontal_wall_string =
-    "SolidBox {"
-    "  translation %7.4f %7.4f 0.025"
-    "  rotation 0 0 1 0"
-    "      appearance PBRAppearance {"
-    "        baseColor 1.0 1.0 1.0"
-    "        roughness 0.5"
-    "        metalness 0"
-    "      }"
-      "        size %7.4f 0.02 0.05"
-    "  name \"%s\""
-    "}";
+"Transform {"
+"  translation  %7.4f %7.4f 0.0001"
+"  rotation 0 0 1 0"
+"  children ["
+"    Shape {"
+"      appearance PBRAppearance {"
+"        baseColor 0 0 0"
+"        roughness 0.5"
+"        metalness 0"
+"      }"
+"      geometry Box {"
+"        size %7.4f 0.02 0.0002"
+"      }"
+"    }"
+"  ]"
+"}";
 
 
 bool cbLabHandler::startDocument()

@@ -231,7 +231,7 @@ int main(int argc, char **argv)
                                     labHandler->getLab()->Target(0)->Center().y, 
                                     0.0}; 
         translationField->setSFVec3f(newTranslation);
-        //std::cout << "E-puck repositioned." << std::endl;
+        std::cout << "E-puck repositioned to (" << newTranslation[0] << ", " << newTranslation[1] << ", " << newTranslation[2] << ")" << std::endl;
     }
     
     // Get the PID of robot controller
