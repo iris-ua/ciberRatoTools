@@ -69,6 +69,31 @@ pid_t get_sibling_pid() {
     return sibling_pid;
 }
 
+// Re-seeds both C++ standard library PRNG and Webots WorldInfo
+void seed_environment(webots::Supervisor *supervisor) {
+  // 1. Generate a non-deterministic seed using system clock and random_device
+  srand((unsigned int)time(NULL));
+
+  int new_seed = rand() % 100000;
+
+  // 2. Access the default WorldInfo node
+  webots::Node *world_info = supervisor->getFromDef("WORLD_INFO"); 
+  // If no DEF string is set on WorldInfo, get the default root WorldInfo:
+  if (!world_info) {
+    world_info = supervisor->getRoot()->getField("children")->getMFNode(0);
+  }
+
+  // 3. Set the 'randomSeed' field on WorldInfo
+  if (world_info) {
+    webots::Field *random_seed_field = world_info->getField("randomSeed");
+    if (random_seed_field) {
+      random_seed_field->setSFInt32(new_seed);
+      std::cout << "[Supervisor] World randomSeed updated to: " << new_seed << std::endl;
+    }
+  }
+}
+
+
 bool is_pid_running(int pid) {
     if (pid <= 0) return false;
     // Sending signal 0 to a PID checks if the process is alive without killing it.
@@ -94,10 +119,6 @@ void build_cell_path(cbLab *lab)
     controlCellPath[0].x = lab->Target(0)->Center().x / (PATHCUBESIZE/2.0)+0.5;
     controlCellPath[0].y = lab->Target(0)->Center().y / (PATHCUBESIZE/2.0)+0.5;
 
-    fprintf(stderr, "::: %d, %d %d %f\n", controlCellPath[0].x, controlCellPath[0].y, lab->nTargets(), lab->Target(0)->Center().x);
-
-    //controlCellPath[0].x = 1;
-    //controlCellPath[0].y = 5;
     struct cell_t newCell = controlCellPath[0];
     newCell.x++;
     nCellPath = 1;
@@ -166,6 +187,8 @@ int main(int argc, char **argv)
     // ---
     webots::Supervisor *supervisor = new webots::Supervisor();
     int timeStep = (int)supervisor->getBasicTimeStep();
+    
+    seed_environment(supervisor);
 
     // ---
     // 1a. GET MAXIMUM SIMULATION TIME

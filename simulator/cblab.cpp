@@ -250,14 +250,14 @@ bool cbLab::reachable(cbPoint i,cbPoint f)
     dirIF = (f-i).angle();
     distIF = i.distance(f);
 
-	std::cerr << "cbLab::reachable i(" << i.x/(0.15/2.0) << "," << i.y/(0.15/2.0) << "), f(" << f.x/(0.15/2.0) << "," << f.y/(0.15/2.0) << "), distIF=" << distIF << ", dirIF=" << dirIF*180.0/M_PI << "\n";
+	//std::cerr << "cbLab::reachable i(" << i.x/(0.15/2.0) << "," << i.y/(0.15/2.0) << "), f(" << f.x/(0.15/2.0) << "," << f.y/(0.15/2.0) << "), distIF=" << distIF << ", dirIF=" << dirIF*180.0/M_PI << "\n";
 
 	if(isInside(cbPoint(i.x+cos(dirIF)*0.2*distIF,i.y+sin(dirIF)*0.2*distIF))) {
-		std::cerr << "cbLab::reachable true\n";
+		//std::cerr << "cbLab::reachable true\n";
 	    return true;
 	}
 	else {
-		std::cerr << "cbLab::reachable false\n";
+		//std::cerr << "cbLab::reachable false\n";
 		return false;
 	}
 

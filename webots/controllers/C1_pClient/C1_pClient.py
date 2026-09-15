@@ -18,10 +18,6 @@ num_dist_sensors = 8
 leftMotor = robot.getDevice("left wheel motor")
 rightMotor = robot.getDevice("right wheel motor")
 
-# Get frontal distance sensors.
-dist_sensors = [robot.getDevice('ps' + str(x)) for x in range(num_dist_sensors)]  # distance sensors
-list(map((lambda s: s.enable(timeStep)), dist_sensors))  # Enable all distance sensors
-
 # Get ground sensors.
 ground_sensors = [robot.getDevice('gs' + str(x)) for x in range(3)]  # ground sensors
 list(map((lambda s: s.enable(timeStep)), ground_sensors))  # Enable all ground sensors
@@ -35,6 +31,7 @@ rightMotor.setPosition(float('inf'))
 leftMotor.setVelocity(cruiseVelocity)
 rightMotor.setVelocity(cruiseVelocity)
 
+# Get camera.
 camera = robot.getDevice("camera")
 camera.enable(timeStep)
 
@@ -42,21 +39,11 @@ white_threshold = 500
 
 while robot.step(timeStep) != -1:
 
-    # if(robot.getTime()>10.0):
-        # exit(0)
-
-    dist_sensor_values = [g.getValue() for g in dist_sensors]
     ground_sensor_values = [g.getValue() for g in ground_sensors]
     
-    #print(dist_sensor_values)
     print(ground_sensor_values)
 
-    if ground_sensor_values[0] > white_threshold \
-       and dist_sensor_values[2] > white_threshold:
-        print('rotate')
-        leftMotor.setVelocity (-cruiseVelocity)
-        rightMotor.setVelocity( cruiseVelocity)
-    elif ground_sensor_values[2] > white_threshold:
+    if ground_sensor_values[2] > white_threshold:
         print('turn left')
         leftMotor.setVelocity ( 0.1*cruiseVelocity)
         rightMotor.setVelocity( 1.2*cruiseVelocity)
