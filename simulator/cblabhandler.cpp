@@ -124,34 +124,6 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
 
         lab = new cbLab;
 
-		sprintf(wall_str, vertical_wall_string.c_str(),
-	      0.0 + offsetX*PATHCUBESIZE,
-		  7*PATHCUBESIZE/2 + offsetY*PATHCUBESIZE,
-          7*PATHCUBESIZE,
-		  "vertical_wall");
-		children_field->importMFNodeFromString(-1, wall_str);
-
-		sprintf(wall_str, vertical_wall_string.c_str(),
-	      14*PATHCUBESIZE + offsetX*PATHCUBESIZE,
-		  7*PATHCUBESIZE/2 + offsetY*PATHCUBESIZE,
-          7*PATHCUBESIZE,
-		  "vertical_wall");
-		children_field->importMFNodeFromString(-1, wall_str);
-
-	    sprintf(wall_str, horizontal_wall_string.c_str(),
-		  14*PATHCUBESIZE/2 + offsetX*PATHCUBESIZE,
-		  0.0 + offsetY*PATHCUBESIZE,
-		  14*PATHCUBESIZE,
-		  "horizontal_wall");
-		children_field->importMFNodeFromString(-1, wall_str);
-
-	    sprintf(wall_str, horizontal_wall_string.c_str(),
-		  14*PATHCUBESIZE/2 + offsetX*PATHCUBESIZE,
-		  7*PATHCUBESIZE + offsetY*PATHCUBESIZE,
-		  14*PATHCUBESIZE,
-		  "horizontal_wall");
-		children_field->importMFNodeFromString(-1, wall_str);
-
 	}
 	else if (tag == "Wall")
 	{

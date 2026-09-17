@@ -1,4 +1,4 @@
-#VRML_SIM R2025a utf8
+#VRML_SIM R2023b utf8
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
@@ -10,8 +10,8 @@ WorldInfo {
   basicTimeStep 16
 }
 Viewpoint {
-  orientation 0.6024628387400252 -0.5529348365105847 -0.5755880423621771 4.2946945170028785
-  position 2.7076962136618707 1.0557347179676133 10.243893788334274
+  orientation 0.44332581202771015 -0.3844578749173261 -0.8097248710543757 4.625403855009419
+  position 0.6310867830554506 -2.33501258372999 4.699685510100453
 }
 TexturedBackground {
 }
@@ -21,15 +21,7 @@ RectangleArena {
   translation 3.975 1.875 0
   floorSize 7.95 3.75
   floorTileSize 0.15 0.15
-  floorAppearance PBRAppearance {
-    baseColorMap ImageTexture {
-      url [
-        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/samples/curriculum/worlds/textures/arena_floor.jpg"
-      ]
-    }
-    roughness 1
-    metalness 0
-  }
+  floorAppearance NULL
   wallHeight 0.05
   wallAppearance PBRAppearance {
     roughness 1
