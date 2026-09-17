@@ -260,12 +260,21 @@ int main(int argc, char **argv)
 
     // Reposition robot to first target area of maze
     webots::Field *translationField = epuck_node->getField("translation");
+    webots::Field *rotationField = epuck_node->getField("rotation");
     if (translationField) {
         // Define the new position (e.g., move to X=1.0, Y=2.0)
         double newTranslation[3] = {labHandler->getLab()->Target(0)->Center().x, 
                                     labHandler->getLab()->Target(0)->Center().y, 
                                     0.0}; 
         translationField->setSFVec3f(newTranslation);
+        
+        double newRotation[4] = {0.0, 0.0, 1.0, 0.0};
+        if (rand() % 10 == 0) {
+            newRotation[3] = M_PI; 
+        }
+        rotationField->setSFRotation(newRotation);
+
+        epuck_node->resetPhysics(); // Reset physics to apply changes immediately
         std::cout << "E-puck repositioned to (" << newTranslation[0] << ", " << newTranslation[1] << ", " << newTranslation[2] << ")" << std::endl;
     }
     
