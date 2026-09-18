@@ -85,10 +85,10 @@ struct cell_t getInitialCell(cbLab *lab)
 
 void determine_lab_map_centered_on_robot_initial_pos(cbLab *lab)
 {
-    int cells_width = int(lab->Width() / PATHCUBESIZE + 0.5);
+    int cells_width  = int(lab->Width()  / PATHCUBESIZE + 0.5);
     int cells_height = int(lab->Height() / PATHCUBESIZE + 0.5);
-    int lmap_width = cells_width * 4 - 1;
-    int lmap_height = cells_height * 4 - 1;
+    int lmap_width   = (cells_width - 2)  * 4 + 1;
+    int lmap_height  = (cells_height - 2) * 4 + 1;
     char lmap[lmap_height][lmap_width];
 
     memset(lmap, ' ', sizeof(lmap));
