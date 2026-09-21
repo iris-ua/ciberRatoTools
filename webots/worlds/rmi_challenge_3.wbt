@@ -1,10 +1,11 @@
-#VRML_SIM R2025a utf8
+#VRML_SIM R2023b utf8
 
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puck.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puckGroundSensors.proto"
 
 WorldInfo {
   basicTimeStep 16
@@ -21,15 +22,7 @@ RectangleArena {
   translation 3.975 1.875 0
   floorSize 7.95 3.75
   floorTileSize 0.15 0.15
-  floorAppearance PBRAppearance {
-    baseColorMap ImageTexture {
-      url [
-        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/samples/curriculum/worlds/textures/arena_floor.jpg"
-      ]
-    }
-    roughness 1
-    metalness 0
-  }
+  floorAppearance NULL
   wallHeight 0.05
   wallAppearance PBRAppearance {
     roughness 1
@@ -40,6 +33,7 @@ DEF EPUCK E-puck {
   translation 0.075 0.075 0
   controller "C3_pClient"
   window "botstudio"
+  customData "FinalTime 450.0 NTargets 3"
   camera_width 32
   camera_height 32
   camera_rotation 0 1 0 0.47
@@ -48,6 +42,10 @@ DEF EPUCK E-puck {
     Compass {
     }
     GPS {
+    }
+  ]
+  groundSensorsSlot [
+    E-puckGroundSensors {
     }
   ]
 }

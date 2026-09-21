@@ -33,11 +33,7 @@ double MAX_TIME_SECONDS = 450.0;
 struct cell_t
 {
     int x, y;
-} controlCellPath[1024], newCell;
-
-int nCellPath = 0;
-int nextPathInd = 0;
-int scoreControl = 0;
+} newCell;
 
 // Get the e-puck node by DEF name (e.g., "EPUCK")
 webots::Node *epuck_node;
@@ -84,8 +80,8 @@ struct cell_t getInitialCell(cbLab *lab)
 {
     struct cell_t cell;
 
-    cell.x = lab->Target(0)->Center().x / PATHCUBESIZE;
-    cell.y = lab->Target(0)->Center().y / PATHCUBESIZE;
+    cell.x = lab->Target(0)->Center().x / PATHCUBESIZE + 0.5;
+    cell.y = lab->Target(0)->Center().y / PATHCUBESIZE + 0.5;
     std::cout << "initial cell: x=" << cell.x << " y=" << cell.y << std::endl;
 
     return cell;
@@ -94,172 +90,70 @@ struct cell_t getInitialCell(cbLab *lab)
 
 void determine_lab_map_centered_on_robot_initial_pos(cbLab *lab)
 {
-    int cells_width = int(lab->Width() / PATHCUBESIZE + 0.5);
+
+    int cells_width  = int(lab->Width()  / PATHCUBESIZE + 0.5);
     int cells_height = int(lab->Height() / PATHCUBESIZE + 0.5);
-    int lmap_width = cells_width * 4 - 1;
-    int lmap_height = cells_height * 4 - 1;
+    int lmap_width   = (cells_width - 2)  * 4 + 1;
+    int lmap_height  = (cells_height - 2) * 4 + 1;
     char lmap[lmap_height][lmap_width];
 
     memset(lmap, ' ', sizeof(lmap));
 
-    struct cell_t initCell = getInitialCell(lab);
+    // debug
+                  struct cell_t initCell = getInitialCell(lab);;
 
-    // find vertical walls
-    for (int cy = 0; cy < cells_height; cy++)
-    {
-        for (int cx = 0; cx < cells_width; cx++)
-        {
-            if (!lab->reachable(cbPoint((cx + 0.5) * PATHCUBESIZE, (cy + 0.5) * PATHCUBESIZE),
-                                cbPoint((cx + 1.5) * PATHCUBESIZE, (cy + 0.5) * PATHCUBESIZE)))
-            {
-                // fprintf(stderr,"not reachable %d %d -> %d %d, lmap %d %d\n", cy, cx, cy, cx+1,
-                //          (cy-initCell.y)*2+lmap_height/2,(cx-initCell.x)*2+1+lmap_width/2);
-                lmap[(cy - initCell.y) * 2 + lmap_height / 2][(cx - initCell.x) * 2 + 1 + lmap_width / 2] = '|';
-            }
-        }
-    }
-    // vertical left wall
-    for (int cy = 0; cy < cells_height; cy++)
-    {
-        int cx = 0;
-        if (!lab->reachable(cbPoint((cx + 0.5) * PATHCUBESIZE, (cy + 0.5) * PATHCUBESIZE),
-                            cbPoint((cx - 0.5) * PATHCUBESIZE, (cy + 0.5) * PATHCUBESIZE)))
-        {
-            lmap[(cy - initCell.y) * 2 + lmap_height / 2][(cx - initCell.x) * 2 - 1 + lmap_width / 2] = '|';
-        }
-    }
+                  //fprintf(stderr,"initCell %d %d\n", initCell.x, initCell.y);
 
-    // find horizontal walls
-    for (int cy = 0; cy < cells_height; cy++)
-    {
-        for (int cx = 0; cx < lmap_width; cx++)
-        {
-            if (!lab->reachable(cbPoint((cx + 0.5) * PATHCUBESIZE, (cy + 0.5) * PATHCUBESIZE),
-                                cbPoint((cx + 0.5) * PATHCUBESIZE, (cy + 1.5) * PATHCUBESIZE)))
-            {
-                lmap[(cy - initCell.y) * 2 + 1 + lmap_height / 2][(cx - initCell.x) * 2 + lmap_width / 2] = '-';
-            }
-        }
-    }
-    // horizontal lower wall
-    int cy = 0;
-    for (int cx = 0; cx < lmap_width; cx++)
-    {
-        if (!lab->reachable(cbPoint((cx + 0.5) * PATHCUBESIZE, (cy + 0.5) * PATHCUBESIZE),
-                            cbPoint((cx + 0.5) * PATHCUBESIZE, (cy - 0.5) * PATHCUBESIZE)))
-        {
-            lmap[(cy - initCell.y) * 2 - 1 + lmap_height / 2][(cx - initCell.x) * 2 + lmap_width / 2] = '-';
-        }
-    }
+                  // find vertical lines
+                  for(int cy = 1; cy < cells_height-1; cy++) {
+                       for(int cx = 1; cx < cells_width; cx++) {
+                            if(lab->isInside(cbPoint(cx*PATHCUBESIZE,cy*PATHCUBESIZE+0.5*PATHCUBESIZE))){
+                                 //fprintf(stderr,"not reachable %d %d -> %d %d, lmap %d %d\n", cy, cx, cy, cx+1, 
+                                 //         (cy-initCell.y)*2+lmap_height/2,(cx-initCell.x)*2+1+lmap_width/2);
+                                 lmap[(cy-initCell.y)*2+lmap_height/2+1][(cx-initCell.x)*2+lmap_width/2] = '|';
+                            }
+                       } 
+                  }
 
-    // mark initial pos as known
-    lmap[lmap_height / 2][lmap_width / 2] = 'X';
+                  // find horizontal lines
+                  for(int cy = 1; cy < cells_height; cy++) {
+                       for(int cx = 1; cx < lmap_width-1; cx++) {
+                            if(lab->isInside(cbPoint(cx*PATHCUBESIZE+0.5*PATHCUBESIZE,cy*PATHCUBESIZE))){
+                                 lmap[(cy-initCell.y)*2+lmap_height/2][(cx-initCell.x)*2+1+lmap_width/2] = '-';
+                            }
+                       } 
+                  }
 
-    // mark reachable positions
-    int changes = 1;
-    while (changes)
-    {
-        changes = 0;
-        for (int ly = 1; ly < lmap_height - 1; ly++)
-        {
-            for (int lx = 1; lx < lmap_width; lx++)
-            {
-                if (lx % 2 == 0 && ly % 2 == 0)
-                    continue;
-                if (lmap[ly][lx] == ' ' &&
-                    (lmap[ly][lx + 1] == 'X' || lmap[ly][lx - 1] == 'X' || lmap[ly + 1][lx] == 'X' || lmap[ly - 1][lx] == 'X'))
-                {
-                    changes = 1;
-                    lmap[ly][lx] = 'X';
-                }
-            }
-        }
-    }
+                  //mark targets
+                  for(unsigned int bi=0; bi < lab->nTargets(); bi++) {
+                      struct cell_t targetCell;
+                      targetCell.x = lab->Target(bi)->Center().X()/PATHCUBESIZE + 0.5;
+                      targetCell.y = lab->Target(bi)->Center().Y()/PATHCUBESIZE + 0.5;
+                      lmap[(targetCell.y-initCell.y)*2+lmap_height/2][(targetCell.x-initCell.x)*2+lmap_width/2] = '0'+bi;
+                  }
 
-    // unmark unseen walls
-    for (int ly = 1; ly < lmap_height - 1; ly++)
-    {
-        for (int lx = 1; lx < lmap_width - 1; lx++)
-        {
-            if (lmap[ly][lx] == '-' && lmap[ly - 1][lx] != 'X' && lmap[ly + 1][lx] != 'X')
-            {
-                lmap[ly][lx] = ' ';
-            }
-            if (lmap[ly][lx] == '|' && lmap[ly][lx - 1] != 'X' && lmap[ly][lx + 1] != 'X')
-            {
-                lmap[ly][lx] = ' ';
-            }
-        }
-    }
 
-    int ly = 0;
-    for (int lx = 0; lx < lmap_width; lx++)
-    {
-        if (lmap[ly][lx] == '-' && lmap[ly + 1][lx] != 'X')
-        {
-            lmap[ly][lx] = ' ';
-        }
-    }
-    ly = lmap_height - 1;
-    for (int lx = 0; lx < lmap_width; lx++)
-    {
-        if (lmap[ly][lx] == '-' && lmap[ly - 1][lx] != 'X')
-        {
-            lmap[ly][lx] = ' ';
-        }
-    }
 
-    int lx = 0;
-    for (int ly = 0; ly < lmap_height; ly++)
-    {
-        if (lmap[ly][lx] == '|' && lmap[ly][lx + 1] != 'X')
-        {
-            lmap[ly][lx] = ' ';
-        }
-    }
-
-    lx = lmap_width - 1;
-    for (int ly = 0; ly < lmap_height; ly++)
-    {
-        if (lmap[ly][lx] == '|' && lmap[ly][lx - 1] != 'X')
-        {
-            lmap[ly][lx] = ' ';
-        }
-    }
-
-    // mark targets
-    for (unsigned int bi = 0; bi < lab->nTargets(); bi++)
-    {
-        struct cell_t targetCell;
-        targetCell.x = lab->Target(bi)->Center().X() / PATHCUBESIZE;
-        targetCell.y = lab->Target(bi)->Center().Y() / PATHCUBESIZE;
-        lmap[(targetCell.y - initCell.y) * 2 + lmap_height / 2][(targetCell.x - initCell.x) * 2 + lmap_width / 2] = '0' + bi;
-    }
-
-    FILE *fp = fopen("planning.out", "w");
-    if (fp == NULL)
-    {
-        fprintf(stderr, "Could not create planning file\n");
-    }
-    else
-    {
-        for (int ly = lmap_height - 1; ly >= 0; ly--)
-        {
-            for (int lx = 0; lx < lmap_width; lx++)
-            {
-                fprintf(fp, "%c", lmap[ly][lx]);
-            }
-            fprintf(fp, "\n");
-        }
-        fclose(fp);
-    }
+                  FILE *fp=fopen("planning.out","w");
+                  if(fp==NULL) {
+                       fprintf(stderr,"Could not create mapping file\n");
+                  }
+                  else {
+                     for(int ly = lmap_height-1; ly>=0; ly--) {
+                        for(int lx = 0; lx < lmap_width; lx++) {
+                              fprintf(fp,"%c",lmap[ly][lx]);
+                        } 
+                        fprintf(fp,"\n");
+                     }
+                     fclose(fp);
+                  }
 
     cbGraph grLab;
 
     // add horizontal links
-    for (float x = PATHCUBESIZE * 0.5; x < lab->Width() - PATHCUBESIZE; x += PATHCUBESIZE)
+    for (float x = PATHCUBESIZE; x < lab->Width() - PATHCUBESIZE - 0.5 * PATHCUBESIZE; x += PATHCUBESIZE)
     {
-        for (float y = PATHCUBESIZE * 0.5; y < lab->Height(); y += PATHCUBESIZE)
+        for (float y = PATHCUBESIZE; y < lab->Height() - 0.5 * PATHCUBESIZE; y += PATHCUBESIZE)
         {
             cbPoint from(x, y);
             cbPoint to(x + PATHCUBESIZE, y);
@@ -273,9 +167,9 @@ void determine_lab_map_centered_on_robot_initial_pos(cbLab *lab)
     }
 
     // add vertical links
-    for (float x = PATHCUBESIZE * 0.5; x < lab->Width(); x += PATHCUBESIZE)
+    for (float x = PATHCUBESIZE; x < lab->Width() - 0.5 * PATHCUBESIZE; x += PATHCUBESIZE)
     {
-        for (float y = PATHCUBESIZE * 0.5; y < lab->Height() - PATHCUBESIZE; y += PATHCUBESIZE)
+        for (float y = PATHCUBESIZE; y < lab->Height() - PATHCUBESIZE - 0.5 * PATHCUBESIZE; y += PATHCUBESIZE)
         {
             cbPoint from(x, y);
             cbPoint to(x, y + PATHCUBESIZE);

@@ -5,8 +5,8 @@ BEGIN {
    pathind = 1
    robDist = 0
 
-   linelength=55
-   nlines=27
+   linelength=49
+   nlines=21
 
    exiting=0
 }
@@ -54,7 +54,7 @@ FNR==NR {
         movdirY = (y - prevY)/2
         #print "lin", prevY+movdirY+(nlines+1)/2, "col", prevX+movdirX+(linelength+1)/2
         #print mapref[prevY+movdirY+(nlines+1)/2][prevX+movdirX+(linelength+1)/2-1],mapref[prevY+movdirY+(nlines+1)/2][prevX+movdirX+(linelength+1)/2],mapref[prevY+movdirY+(nlines+1)/2][prevX+movdirX+(linelength+1)/2+1]
-        if(mapref[prevY+movdirY+(nlines+1)/2][prevX+movdirX+(linelength+1)/2]!="X") {
+        if(mapref[prevY+movdirY+(nlines+1)/2][prevX+movdirX+(linelength+1)/2]!="-" && mapref[prevY+movdirY+(nlines+1)/2][prevX+movdirX+(linelength+1)/2]!="|") {
              #print "lin", prevY+movdirY+(nlines+1)/2, "col", prevX+movdirX+(linelength+1)/2
              print "prevY",prevY/2, "prevX", prevX/2 ,"movY", movdirY ,"movX", movdirX
              print "Error in path"

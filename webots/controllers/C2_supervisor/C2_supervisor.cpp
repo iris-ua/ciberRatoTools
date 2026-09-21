@@ -76,8 +76,8 @@ struct cell_t getInitialCell(cbLab *lab)
 {
     struct cell_t cell;
 
-    cell.x = lab->Target(0)->Center().x / PATHCUBESIZE;
-    cell.y = lab->Target(0)->Center().y / PATHCUBESIZE;
+    cell.x = lab->Target(0)->Center().x / PATHCUBESIZE + 0.5;
+    cell.y = lab->Target(0)->Center().y / PATHCUBESIZE + 0.5;
     std::cout << "initial cell: x=" << cell.x << " y=" << cell.y << std::endl;
 
     return cell;

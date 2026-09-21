@@ -5,6 +5,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puck.proto"
 IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/solids/protos/SolidBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/robots/gctronic/e-puck/protos/E-puckGroundSensors.proto"
 
 WorldInfo {
   basicTimeStep 16
@@ -21,15 +22,7 @@ RectangleArena {
   translation 3.975 1.875 0
   floorSize 7.95 3.75
   floorTileSize 0.15 0.15
-  floorAppearance PBRAppearance {
-    baseColorMap ImageTexture {
-      url [
-        "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/samples/curriculum/worlds/textures/arena_floor.jpg"
-      ]
-    }
-    roughness 1
-    metalness 0
-  }
+  floorAppearance NULL
   wallHeight 0.05
   wallAppearance PBRAppearance {
     roughness 1
@@ -48,6 +41,10 @@ DEF EPUCK E-puck {
   turretSlot [
     Compass {
       resolution 0.1
+    }
+  ]
+  groundSensorsSlot [
+    E-puckGroundSensors {
     }
   ]
 }

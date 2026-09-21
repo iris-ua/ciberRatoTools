@@ -14,10 +14,10 @@ timestep = int(robot.getBasicTimeStep())
 leftMotor = robot.getDevice("left wheel motor")
 rightMotor = robot.getDevice("right wheel motor")
 
-# Get frontal distance sensors.
-num_dist_sensors = 8
-dist_sensors = [robot.getDevice('ps' + str(x)) for x in range(num_dist_sensors)]  # distance sensors
-list(map((lambda s: s.enable(timestep)), dist_sensors))  # Enable all distance sensors
+# Get ground sensors.
+num_ground_sensors = 3
+ground_sensors = [robot.getDevice('gs' + str(x)) for x in range(num_ground_sensors)]  # ground sensors
+list(map((lambda s: s.enable(timestep)), ground_sensors))  # Enable all ground sensors
 
 # Get camera and enable it
 camera = robot.getDevice("camera")
@@ -50,6 +50,6 @@ while robot.step(timestep) != -1:
 
     print('compass', compass.getValues())
     print("Encoders: left = ", leftEncoder.getValue(), " right = ", rightEncoder.getValue())
-    print("Distance sensors:", [f'{ds.getValue():6.3f}' for ds in dist_sensors])
+    print("Distance sensors:", [f'{gs.getValue():6.3f}' for gs in ground_sensors])
     print(robot.getCustomData())
 
