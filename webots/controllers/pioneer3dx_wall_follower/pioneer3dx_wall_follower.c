@@ -36,7 +36,7 @@
 
 /* The CONTROL_TYPE macro will be passed to the controller() function and 
     defines the type of control (see controller.h) */
-#define CONTROL_TYPE PID
+#define CONTROL_TYPE BANG2
 
 static double clamp(double v, double lo, double hi)
 {
