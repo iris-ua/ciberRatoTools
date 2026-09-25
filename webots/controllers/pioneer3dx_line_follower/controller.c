@@ -111,11 +111,7 @@ float controller(controller_t type, float r, float y)
       /* Compute control signal */
       u = u_m1 + K0*e + K1*e_m1 + K2*e_m2;
 
-      /* store values for next iterations */
-      e_m2 = e_m1;
-      e_m1 = e;
-      u_m1 = u;
-
+      
       // Clip the control signal to avoid saturation
       if(u > max_u){
         u = max_u;
@@ -123,7 +119,11 @@ float controller(controller_t type, float r, float y)
       if (u < -max_u){
         u = -max_u;
       }
-
+      /* store values for next iterations */
+      e_m2 = e_m1;
+      e_m1 = e;
+      u_m1 = u;
+      
       break;
 
 

@@ -1,12 +1,16 @@
 /*
- * pioneer_wall_follower.c
- * First-approach right-wall follower for the Webots Pioneer 3-DX.
+ * pioneer3dx_line_follower.c
+ * Set-point tracking of the y position for the Webots Pioneer 3-DX.
  *
- * Uses sonars so7 (front-right side) and so8 (rear-right side), both
- * pointing straight right, to estimate distance and angle to the wall.
- * Uses the front sonars so3/so4 to avoid obstacles ahead.
+ * The robot drives forward at constant base speed while a feedback
+ * controller (see controller.h / controller.c) steers it so that its
+ * y coordinate follows a set point: TARGET_Y for 0-30 s, then
+ * 0.8*TARGET_Y until t = 60 s, when the simulation is paused.
  *
- * Check SONAR_SPACING and the sonar lookupTable against Pioneer3dx.proto.
+ * The actual y position is read through the Supervisor API (the robot's
+ * "supervisor" field must be TRUE). The controller type is selected with
+ * the CONTROL_TYPE macro. Time, target, y, error and control signal are
+ * logged to robot_log.csv for plotting (see plot_graph.m).
  */
 
 #include <webots/robot.h>
