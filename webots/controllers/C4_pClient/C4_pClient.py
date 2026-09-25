@@ -46,6 +46,11 @@ rightMotor.setVelocity(cruiseVelocity)
 # - perform simulation steps until Webots is stopping the controller
 while robot.step(timestep) != -1:
     # Read the sensors:
+
+    ground_sensor_values = [g.getValue() for g in ground_sensors]
+    
+    print(ground_sensor_values)
+
     frame = camera.getImage()
 
     print('compass', compass.getValues())

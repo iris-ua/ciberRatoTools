@@ -142,12 +142,12 @@ bool cbLabHandler::startElement( const QString&, const QString&, const QString& 
 		const QString &radius_at = attr.value(QString("Radius"));
 		if (!radius_at.isNull()) radius = radius_at.toDouble();
         float id_color[N_TARGET_COLORS][3] = {{1.0,0.0,0.0},
-                          {0.2,1.0,1.0},
+                          {0.25,1.0,0.0},
                           {1.0,1.0,0.0},
                           {1.0,0.0,1.0},
-                          {0.45,1.0,1.0},
+                          {0.25,1.0,1.0},
                           {1.0,0.45,0.0},
-                          {0.0,0.0,0.0}};
+                          {1.0,1.0,1.0}};
         char target_str[1024*8];
         sprintf(target_str, target_string.c_str(),
                 x * PATHCUBESIZE*0.5 + offsetX*PATHCUBESIZE, y * PATHCUBESIZE*0.5 + offsetY*PATHCUBESIZE,

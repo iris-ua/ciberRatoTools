@@ -1,4 +1,4 @@
-<Lab Name="RMI-2223 C1 Lab" Height="14" Width="28">
+<Lab Name="RMI-2627 C1 Lab" Height="14" Width="28">
 		<Beacon X="5" Y="10.0" Height="4.0"/>
 		<Target X="5" Y="10.0" Radius="1.0"/>
 		<Beacon X="16" Y="9.0" Height="4.0"/>
