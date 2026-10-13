@@ -8,18 +8,20 @@ IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R20
 
 WorldInfo {
   basicTimeStep 16
+  FPS 25
+  randomSeed 67202
 }
 Viewpoint {
   orientation 0.6128764689450555 -0.5645477226040582 -0.5528727726303871 4.261152950812919
-  position 2.5508052528188054 1.9400246869309785 10.3378301217951
+  position 0.02198004554526828 0.5038269053192768 6.452608453648112
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
-  translation 3.975 1.875 0
-  floorSize 7.95 3.75
+  translation 1.05 0.525 0
+  floorSize 2.1 1.05
   floorTileSize 0.15 0.15
   floorAppearance PBRAppearance {
     baseColorMap ImageTexture {
@@ -37,10 +39,6 @@ RectangleArena {
   }
 }
 DEF EPUCK E-puck {
-  hidden position_0_0 3.0636426766479625e-08
-  hidden position_0_1 3.062670285636161e-08
-  hidden rotation_1 0 1 0 2.9802322387695313e-08
-  hidden rotation_2 0 1 0 2.9802322387695313e-08
   translation 0.075 0.075 -3.198099789485272e-05
   rotation 0.00016717640763559707 -8.589024322248057e-08 0.9999999860260207 1.6439685347957015e-05
   controller "C1_pClient"

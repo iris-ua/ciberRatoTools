@@ -58,8 +58,8 @@ int main(int argc, char **argv)
     int offsetY = 0;
 
     srand(time(0));
-    offsetX = rand() % 40;
-    offsetY = rand() % 19;
+    offsetX = 0;
+    offsetY = 0;
 
 
     // ---
