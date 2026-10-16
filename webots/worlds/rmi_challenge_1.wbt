@@ -9,6 +9,7 @@ EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/project
 
 WorldInfo {
   randomSeed 84352
+  FPS 30
 }
 Viewpoint {
   orientation 0.42335033659529586 -0.35699764802709205 -0.8326626999018115 4.639438507504511

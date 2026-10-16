@@ -39,6 +39,7 @@ struct cell_t
 webots::Node *epuck_node;
 
 #define PATHCUBESIZE (0.15)
+#define ROBOTDIAM (0.071)
 
 pid_t get_sibling_pid() {
     FILE *fp;
@@ -390,9 +391,14 @@ int main(int argc, char **argv)
     
         // Get the current simulation time.
         double currentTime = supervisor->getTime();
-
+        
+        // Get Robot position inside maze (compensating offset)
+        const double *position = epuck_node->getPosition();
+        cbPoint robotPosInMaze(position[0] - offsetX * PATHCUBESIZE, position[1] - offsetY * PATHCUBESIZE) ;
+        
         // Check if robot controller is alive
-        if (robot_pid > 0 && !is_pid_running(robot_pid)) {
+        if (robot_pid > 0 && !is_pid_running(robot_pid) 
+           || labHandler->getLab()->wallDistanceAboveHeight(robotPosInMaze, -1.0) > ROBOTDIAM*0.5) {       
             if(! finished) {
                 printf("Robot controller finished at time %f.\n", currentTime);
                 finalTime = currentTime;
