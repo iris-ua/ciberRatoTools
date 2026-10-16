@@ -282,8 +282,7 @@ int main(int argc, char **argv)
         cbPoint robotPosInMaze(position[0] - offsetX * PATHCUBESIZE, position[1] - offsetY * PATHCUBESIZE) ;
         
         // Check if robot controller is alive
-        if (robot_pid > 0 && !is_pid_running(robot_pid) 
-           || labHandler->getLab()->wallDistanceAboveHeight(robotPosInMaze, -1.0) > ROBOTDIAM*0.5) {
+        if (robot_pid > 0 && !is_pid_running(robot_pid)) { 
             if(! finished) {
                 printf("Robot controller finished at time %f.\n", currentTime);
                 finalTime = currentTime;
@@ -295,8 +294,9 @@ int main(int argc, char **argv)
 
             //supervisor->simulationQuit(0); 
         }
-        // Check if the simulation time has exceeded the maximum duration.
-        else if (currentTime >= MAX_TIME_SECONDS)
+        // Check if the simulation time has exceeded the maximum duration or robot not over the line
+        else if (currentTime >= MAX_TIME_SECONDS
+           || labHandler->getLab()->wallDistanceAboveHeight(robotPosInMaze, -1.0) > ROBOTDIAM*0.5) 
         {
             // The argument 0 indicates a successful exit.
             if (epuck_node) {
