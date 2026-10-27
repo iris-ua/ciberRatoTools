@@ -38,6 +38,11 @@ class Map():
                            self.labMap[row][c//3*2]='-'
                        else:
                            None
+        for child in root.iter('Target'):
+           col = float(child.attrib['X'])
+           row = float(child.attrib['Y'])
+           self.labMap[int(row)-1][int(col)-1]='I'
+           print('initial pos', col*0.15/2, row*0.15/2)
                
            i=i+1
 class MyRob:

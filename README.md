@@ -9,8 +9,8 @@ starting position to beacon area and then return to their start position.
 
 ## Contents
 
-* simulator -           The cb_webots library source code
-* webots -              The cb_webots worlds and controllers
+* simulator -           The cb_webots_pc library source code
+* webots -              The cb_webots_pc worlds and controllers
 
 ## Install
 
@@ -29,7 +29,7 @@ sudo apt-get install build-essential cmake qtmultimedia5-dev git
 
 Then in the repository base dir, execute:
 ```bash
-git switch cb_webots
+git switch cb_webots_pc
 mkdir build
 cd build
 cmake ..

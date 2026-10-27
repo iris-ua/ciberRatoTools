@@ -33,6 +33,7 @@ int scoreControl = 0;
 webots::Node *epuck_node;
 
 #define PATHCUBESIZE (0.15)
+#define ROBOTDIAM (0.071)
 
 struct cell_t getInitialCell(cbLab *lab)
 {
@@ -148,6 +149,16 @@ int main(int argc, char **argv)
         double currentTime = supervisor->getTime();
 
         std::string scoreText;
+
+        // Get Robot position inside maze (compensating offset)
+        const double *position = epuck_node->getPosition();
+        cbPoint robotPosInMaze(position[0], position[1]);
+
+        if(labHandler->getLab()->wallDistance(robotPosInMaze) < ROBOTDIAM*0.5 + 0.005) {
+            // The robot is too close to a wall, so we'll stop it.
+            scoreText = "TOO CLOSE TO WALL!";
+            std::cerr << scoreText << std::endl;
+        }
 
         // Check if the simulation time has exceeded the maximum duration.
         if (currentTime >= MAX_TIME_SECONDS)
